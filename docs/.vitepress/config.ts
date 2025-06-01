@@ -6,12 +6,27 @@ const GUIDES: DefaultTheme.NavItemWithLink[] = [
   { text: 'Getting Started', link: '/guide/' },
   { text: 'Installation', link: '/guide/install' },
   { text: 'Basic Usage', link: '/guide/basic-usage' },
-  { text: 'SSR vs CSR', link: '/guide/ssr-csr' },
   { text: 'Configuration', link: '/guide/configuration' },
   { text: 'Log Levels', link: '/guide/log-levels' },
+  { text: 'SSR vs CSR', link: '/guide/ssr-csr' },
+  { text: 'Customization', link: '/guide/customization' },
+  { text: 'Complete Customize Guide', link: '/guide/customize-guide' },
   { text: 'Best Practices', link: '/guide/best-practices' },
-  { text: 'Compatibility', link: '/guide/compatibility' },
-  { text: 'Customization', link: '/guide/customization' }
+  { text: 'Compatibility', link: '/guide/compatibility' }
+]
+
+const EXAMPLES: DefaultTheme.NavItemWithLink[] = [
+  { text: 'Basic Examples', link: '/examples/' },
+  { text: 'Custom Loggers', link: '/examples/custom-loggers' },
+  { text: 'Integration Examples', link: '/examples/integration' },
+  { text: 'Production Setup', link: '/examples/production' },
+  { text: 'SSR/CSR Quickstart', link: '/examples/ssr-csr-quickstart' }
+]
+
+const API: DefaultTheme.NavItemWithLink[] = [
+  { text: 'Logger API', link: '/api/logger' },
+  { text: 'Configuration API', link: '/api/configuration' },
+  { text: 'TypeScript Types', link: '/api/types' }
 ]
 
 const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
@@ -25,9 +40,6 @@ const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
 ]
 
 const REFERENCES: DefaultTheme.NavItemWithLink[] = [
-  { text: 'Logger API', link: '/references/logger' },
-  { text: 'Configuration API', link: '/references/configuration' },
-  { text: 'TypeScript Types', link: '/references/types' },
   { text: 'Environment Variables', link: '/references/environment' },
   { text: 'Error Codes', link: '/references/errors' }
 ]
@@ -42,10 +54,9 @@ const REQUEST: DefaultTheme.NavItemWithLink[] = [
 export default defineConfig({
   title: '🫧 Plip Logger',
   description: 'A delightful, colorful logging experience for modern applications',
-  base: '/plip/',
+  base: '/',
   cleanUrls: true,
-    themeConfig: {
-    nav: [
+    themeConfig: {    nav: [
       {
         text: 'Guide',
         items: [
@@ -55,15 +66,23 @@ export default defineConfig({
         ]
       },
       {
+        text: 'Examples',
+        items: EXAMPLES
+      },
+      {
+        text: 'API',
+        items: API
+      },
+      {
         text: 'Integrations',
         items: INTEGRATIONS
       },
       {
-        text: 'References',
+        text: 'Env & Errors',
         items: REFERENCES
       },
       {
-        text: 'Request',
+        text: 'Community',
         items: REQUEST
       },
       {
@@ -74,9 +93,7 @@ export default defineConfig({
           { text: 'Contributing', link: '/request/contributing' }
         ]
       }
-    ],
-
-    sidebar: Object.assign(
+    ],sidebar: Object.assign(
       {},
       {
         '/': [
@@ -85,15 +102,23 @@ export default defineConfig({
             items: GUIDES
           },
           {
+            text: 'Examples',
+            items: EXAMPLES
+          },
+          {
+            text: 'API Reference',
+            items: API
+          },
+          {
             text: 'Integrations',
             items: INTEGRATIONS
           },
           {
-            text: 'References',
+            text: 'Environment & Errors',
             items: REFERENCES
           },
           {
-            text: 'Request',
+            text: 'Community',
             items: REQUEST
           }
         ]
@@ -119,13 +144,12 @@ export default defineConfig({
       text: 'Suggest changes to this page'
     }
   },
-
   head: [
-    ['link', { rel: 'icon', href: '/plip/favicon.ico' }],
+    ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['meta', { name: 'theme-color', content: '#646cff' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:locale', content: 'en' }],
     ['meta', { name: 'og:site_name', content: 'Plip Logger' }],
-    ['meta', { name: 'og:image', content: '/plip/og-image.png' }]
+    ['meta', { name: 'og:image', content: '/og-image.png' }]
   ]
 })
