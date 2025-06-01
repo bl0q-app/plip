@@ -12,6 +12,7 @@ Plip is a lightweight, feature-rich logging library that makes debugging and mon
 - 😊 **Expressive Emojis** - Visual context that makes logs easier to scan
 - 🎯 **7 Log Levels** - From verbose to error, perfect granularity
 - 🔍 **Syntax Highlighting** - JSON objects rendered beautifully
+- 🏗️ **SSR/CSR Optimized** - Dedicated configurations for server and client environments
 - ⚙️ **Fluent API** - Chain methods for elegant configuration
 - 🚀 **Zero Config** - Works great out of the box
 - 📦 **TypeScript First** - Full type safety and IntelliSense
@@ -70,6 +71,7 @@ Your terminal will display beautifully formatted, colorful logs with emojis that
 
 - [Install Plip](/guide/install) - Detailed installation guide
 - [Basic Usage](/guide/basic-usage) - Learn the fundamentals
+- [SSR vs CSR Logging](/guide/ssr-csr) - Server-side and client-side optimized configurations
 - [Configuration](/guide/configuration) - Customize Plip to your needs
 - [Best Practices](/guide/best-practices) - Write better logs
 

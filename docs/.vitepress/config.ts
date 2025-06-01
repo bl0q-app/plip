@@ -6,6 +6,7 @@ const GUIDES: DefaultTheme.NavItemWithLink[] = [
   { text: 'Getting Started', link: '/guide/' },
   { text: 'Installation', link: '/guide/install' },
   { text: 'Basic Usage', link: '/guide/basic-usage' },
+  { text: 'SSR vs CSR', link: '/guide/ssr-csr' },
   { text: 'Configuration', link: '/guide/configuration' },
   { text: 'Log Levels', link: '/guide/log-levels' },
   { text: 'Best Practices', link: '/guide/best-practices' },

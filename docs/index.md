@@ -23,10 +23,16 @@ features:
   - title: Zero Configuration
     icon: ⚡
     details: Works perfectly out of the box with sensible defaults. No setup required to get started.
+  - title: SSR & CSR Optimized
+    icon: 🏗️
+    details: Dedicated configurations for server-side and client-side environments with rich visual features.
   - title: TypeScript First
     icon: 🛡️
     details: Built with TypeScript, fully type-safe with excellent IntelliSense support.
   - title: Framework Agnostic
     icon: 🔧
     details: Works seamlessly with Express, Fastify, Next.js, NestJS and any Node.js application.
+  - title: Production Ready
+    icon: 🚀
+    details: Environment-aware with production-safe defaults. No logs in production unless explicitly enabled.
 ---

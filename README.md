@@ -23,7 +23,8 @@ Tired of boring console logs? **Plip** brings joy back to logging with:
 - 🎯 **7 Log Levels** - From `verbose` to `error`, perfect granularity
 - 🔍 **Syntax Highlighting** - JSON objects rendered beautifully
 - ⚙️ **Fluent API** - Chain methods for elegant configuration
-- 🚀 **Zero Config** - Works great out of the box
+- 🚀 **Zero Config** - Works great out of the box, CSR by default
+- 🌐 **SSR/CSR Optimized** - Specialized configs for server and client environments
 - 📦 **TypeScript First** - Full type safety and IntelliSense
 - 🔧 **Environment Aware** - Respects `NODE_ENV` and terminal capabilities
 
@@ -249,6 +250,79 @@ const logger = createPlip({
 ```
 
 ### Conditional Logging
+```typescript
+import { createPlip } from '@ru-dr/plip';
+
+// Only log in development
+const debugLogger = createPlip({
+  devOnly: true,
+  enabledLevels: ['debug', 'trace']
+});
+
+// Log everything except in production
+const logger = createPlip({
+  enabledLevels: process.env.NODE_ENV === 'production' 
+    ? ['warn', 'error'] 
+    : ['debug', 'info', 'warn', 'error']
+});
+```
+
+## 🌐 SSR vs CSR Logging
+
+Plip provides **optimized configurations** for both Server-Side Rendering (SSR) and Client-Side Rendering (CSR) environments. **CSR is the default** for the best modern web development experience.
+
+### Quick Usage
+
+```typescript
+import { plip, createSSRLogger, createCSRLogger } from '@ru-dr/plip';
+
+// Default logger uses CSR configuration (with emojis & colors)
+plip.info("Hello world!"); // 🫧 [INFO] Hello world!
+
+// Explicit SSR logger (optimized for servers)
+const serverLogger = createSSRLogger();
+serverLogger.info("Server started", { port: 3000 }); 
+// Output: [INFO] Server started {"port":3000}
+
+// Explicit CSR logger (optimized for browsers) 
+const clientLogger = createCSRLogger();
+clientLogger.success("User logged in", { userId: 123 });
+// Output: 🎉 [SUCCESS] User logged in {"userId":123}
+```
+
+### Key Differences
+
+| Feature | SSR (Server) | CSR (Client) |
+|---------|-------------|-------------|
+| **Emojis** | ❌ Disabled | ✅ Enabled |
+| **Colors** | ❌ Disabled | ✅ Enabled |
+| **Syntax Highlighting** | ❌ Disabled | ✅ Enabled |
+| **Best For** | APIs, servers, logs | Browsers, debugging |
+| **Output Style** | Structured, plain | Rich, visual |
+
+### Framework Examples
+
+```typescript
+// Next.js API Route (SSR)
+import { createSSRLogger } from '@ru-dr/plip';
+const serverLogger = createSSRLogger();
+
+export default function handler(req, res) {
+  serverLogger.info("API request", { method: req.method, url: req.url });
+}
+
+// React Component (CSR)  
+import { createCSRLogger } from '@ru-dr/plip';
+const clientLogger = createCSRLogger();
+
+function App() {
+  useEffect(() => {
+    clientLogger.success("App loaded"); // 🎉 [SUCCESS] App loaded
+  }, []);
+}
+```
+
+> 📖 **Learn More:** Check out our [SSR vs CSR Guide](./docs/guide/ssr-csr.md) for detailed examples and best practices.
 ```typescript
 import { createPlip } from '@ru-dr/plip';
 

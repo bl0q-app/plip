@@ -1,6 +1,7 @@
 // src/lib/config.ts
 
 import { colors } from '../utils/colors.js';
+import { isNode, isBrowser, isDevelopment, isProduction } from '../utils/env.js';
 
 export type LogLevel = "info" | "warn" | "error" | "success" | "debug" | "trace" | "verbose";
 
@@ -59,3 +60,61 @@ export const defaultConfig: Required<PlipConfig> = {
   enabledLevels: ["info", "warn", "error", "success", "debug", "trace", "verbose"],
   devOnly: false,
 };
+
+// SSR (Server-Side Rendering) Configuration
+// Optimized for server environments with all visual features enabled
+export const ssrConfig: Required<PlipConfig> = {
+  silent: false,
+  enableEmojis: true, // Enabled by default for rich server logs
+  enableColors: true, // Enabled by default for better readability
+  enableSyntaxHighlighting: true, // Enabled by default for object formatting
+  theme: {},
+  enabledLevels: isProduction() 
+    ? [] // No logs in production by default - user must explicitly enable
+    : ["info", "warn", "error", "success", "debug", "trace", "verbose"], // All levels in development
+  devOnly: false,
+};
+
+// CSR (Client-Side Rendering) Configuration 
+// Optimized for browser environments with all visual features enabled
+export const csrConfig: Required<PlipConfig> = {
+  silent: false,
+  enableEmojis: true, // Visual appeal in browser console
+  enableColors: true, // Enhanced readability in browser dev tools
+  enableSyntaxHighlighting: true, // Rich formatting for debugging
+  theme: {},
+  enabledLevels: isProduction() 
+    ? [] // No logs in production by default - user must explicitly enable
+    : ["verbose", "debug", "info", "success", "warn", "error", "trace"], // Full logging in development
+  devOnly: false,
+};
+
+/**
+ * Automatically detects the environment and returns appropriate configuration
+ * CSR is the default as requested
+ */
+export function getAutoConfig(): Required<PlipConfig> {
+  // If explicitly in Node.js server environment, use SSR config
+  if (isNode() && !isBrowser()) {
+    return ssrConfig;
+  }
+  
+  // For browser or mixed environments, default to CSR
+  return csrConfig;
+}
+
+/**
+ * Creates a configuration optimized for SSR (Server-Side Rendering)
+ * @param overrides Optional configuration overrides
+ */
+export function createSSRConfig(overrides: Partial<PlipConfig> = {}): Required<PlipConfig> {
+  return { ...ssrConfig, ...overrides };
+}
+
+/**
+ * Creates a configuration optimized for CSR (Client-Side Rendering)
+ * @param overrides Optional configuration overrides
+ */
+export function createCSRConfig(overrides: Partial<PlipConfig> = {}): Required<PlipConfig> {
+  return { ...csrConfig, ...overrides };
+}

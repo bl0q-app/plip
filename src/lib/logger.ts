@@ -1,9 +1,15 @@
 // src/lib/logger.ts
 
 import type { LogLevel, PlipConfig, PlipTheme } from "./config.js";
-import { defaultTheme, defaultConfig } from "./config.js";
+import { 
+  defaultTheme, 
+  defaultConfig, 
+  createSSRConfig, 
+  createCSRConfig,
+  csrConfig 
+} from "./config.js";
 import { isDevelopment, supportsColor, supportsEmoji } from "../utils/env.js";
-import { formatObject, highlightCode } from "../utils/colors.js";
+import { formatObject } from "../utils/colors.js";
 
 class PlipLogger {
   private config: Required<PlipConfig>;
@@ -113,8 +119,70 @@ class PlipLogger {
   }
 }
 
-// Default instance
-export const plip = new PlipLogger();
+// Default instance with CSR configuration by default (as requested)
+export const plip = new PlipLogger(csrConfig);
 
 // Factory function for custom instances
 export const createPlip = (config: PlipConfig = {}) => new PlipLogger(config);
+
+/**
+ * Creates a logger optimized for SSR (Server-Side Rendering)
+ * Features:
+ * - Rich emojis and colors for enhanced readability
+ * - Structured output suitable for both terminal and log aggregation
+ * - Production-safe with no logs by default in production
+ * - All visual features enabled for better debugging experience
+ * 
+ * @param overrides Optional configuration overrides
+ * @example
+ * ```typescript
+ * import { createSSRLogger } from '@ru-dr/plip';
+ * 
+ * const serverLogger = createSSRLogger();
+ * serverLogger.info("Server started", { port: 3000, env: "production" });
+ * 
+ * // With custom overrides
+ * const customServerLogger = createSSRLogger({
+ *   enabledLevels: ["error", "warn"] // Only errors and warnings
+ * });
+ * ```
+ */
+export const createSSRLogger = (overrides: Partial<PlipConfig> = {}) => 
+  new PlipLogger(createSSRConfig(overrides));
+
+/**
+ * Creates a logger optimized for CSR (Client-Side Rendering)
+ * Features:
+ * - Rich visual output with colors and emojis
+ * - Enhanced readability in browser console
+ * - Detailed logging for development
+ * - Syntax highlighting for objects
+ * 
+ * @param overrides Optional configuration overrides
+ * @example
+ * ```typescript
+ * import { createCSRLogger } from '@ru-dr/plip';
+ * 
+ * const clientLogger = createCSRLogger();
+ * clientLogger.success("User logged in", { userId: 123, timestamp: new Date() });
+ * 
+ * // With custom overrides
+ * const customClientLogger = createCSRLogger({
+ *   enabledLevels: ["info", "warn", "error"] // Reduced verbosity
+ * });
+ * ```
+ */
+export const createCSRLogger = (overrides: Partial<PlipConfig> = {}) => 
+  new PlipLogger(createCSRConfig(overrides));
+
+/**
+ * Pre-configured SSR logger instance
+ * Ready to use for server-side logging without additional configuration
+ */
+export const ssrLogger = createSSRLogger();
+
+/**
+ * Pre-configured CSR logger instance  
+ * Ready to use for client-side logging without additional configuration
+ */
+export const csrLogger = createCSRLogger();
