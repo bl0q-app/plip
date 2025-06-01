@@ -1,0 +1,7 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="32" cy="32" r="28" fill="#646cff" opacity="0.1"/>
+  <circle cx="32" cy="32" r="20" fill="#646cff" opacity="0.2"/>
+  <circle cx="32" cy="32" r="12" fill="#646cff" opacity="0.3"/>
+  <circle cx="32" cy="32" r="6" fill="#646cff"/>
+  <text x="32" y="38" text-anchor="middle" fill="white" font-family="Arial" font-size="12" font-weight="bold">🫧</text>
+</svg>
