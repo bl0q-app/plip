@@ -30,19 +30,25 @@ Tired of boring console logs? **Plip** brings joy back to logging with:
 
 ## 📦 Installation
 
-```bash
-# npm
+::: code-group
+
+```sh [npm]
 npm install @ru-dr/plip
+```
 
-# yarn
+```sh [yarn]  
 yarn add @ru-dr/plip
+```
 
-# pnpm
+```sh [pnpm]
 pnpm add @ru-dr/plip
+```
 
-# bun
+```sh [bun]
 bun add @ru-dr/plip
 ```
+
+:::
 
 ## 🚀 Quick Start
 

@@ -6,7 +6,7 @@ hero:
   text: "Modern logging Framework"
   tagline: A beautiful yet powerful logging experience for Modern applications.
   image:
-    src: https://raw.githubusercontent.com/Tarikul-Islam-Anik/Animated-Fluent-Emojis/master/Emojis/Symbols/Bubbles.png
+    src: 🫧
     alt: Bubbles
   actions:
     - theme: brand

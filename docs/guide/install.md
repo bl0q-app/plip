@@ -4,29 +4,25 @@ This guide covers all the ways to install and set up Plip Logger in your project
 
 ## Package Manager Installation
 
-### npm
+::: code-group
 
-```bash
-npm install @ru-dr/plip
+```sh [npm]
+$ npm install @ru-dr/plip
 ```
 
-### yarn
-
-```bash
-yarn add @ru-dr/plip
+```sh [yarn]
+$ yarn add @ru-dr/plip
 ```
 
-### pnpm
-
-```bash
-pnpm add @ru-dr/plip
+```sh [pnpm]
+$ pnpm add @ru-dr/plip
 ```
 
-### bun
-
-```bash
-bun add @ru-dr/plip
+```sh [bun]
+$ bun add @ru-dr/plip
 ```
+
+:::
 
 ## Requirements
 

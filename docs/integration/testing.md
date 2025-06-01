@@ -4,11 +4,33 @@ This guide covers integrating Plip Logger into your testing environment, includi
 
 ## Installation
 
-```bash
-npm install @ru-dr/plip
+::: code-group
+
+```sh [npm]
+$ npm install @ru-dr/plip
 # Development dependencies for testing
-npm install --save-dev jest @types/jest vitest
+$ npm install --save-dev jest @types/jest vitest
 ```
+
+```sh [yarn]
+$ yarn add @ru-dr/plip
+# Development dependencies for testing
+$ yarn add --dev jest @types/jest vitest
+```
+
+```sh [pnpm]
+$ pnpm add @ru-dr/plip
+# Development dependencies for testing
+$ pnpm add -D jest @types/jest vitest
+```
+
+```sh [bun]
+$ bun add @ru-dr/plip
+# Development dependencies for testing
+$ bun add --dev jest @types/jest vitest
+```
+
+:::
 
 ## Jest Integration
 

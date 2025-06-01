@@ -157,7 +157,6 @@ describe("plip logger", () => {
     
     process.env.NODE_ENV = originalEnv;
   });
-
   test("default plip instance works", () => {
     // Reset NODE_ENV to ensure plip works
     const originalEnv = process.env.NODE_ENV;
@@ -169,5 +168,107 @@ describe("plip logger", () => {
     expect(consoleLogs[0]).toContain("[INFO]");
     
     process.env.NODE_ENV = originalEnv;
+  });
+
+  test("withContext adds context to log messages", () => {
+    const logger = createPlip({ 
+      devOnly: false,
+      enableColors: false,
+      enableEmojis: false 
+    });
+    
+    const contextLogger = logger.withContext({ 
+      service: 'auth-service', 
+      version: '1.2.3' 
+    });
+    
+    contextLogger.info("User login attempt", { userId: 123 });
+    
+    expect(consoleLogs).toHaveLength(1);
+    expect(consoleLogs[0]).toContain("service");
+    expect(consoleLogs[0]).toContain("auth-service");
+    expect(consoleLogs[0]).toContain("version");
+    expect(consoleLogs[0]).toContain("1.2.3");
+    expect(consoleLogs[0]).toContain("userId");
+    expect(consoleLogs[0]).toContain("123");
+  });
+
+  test("withContext works with multiple contexts", () => {
+    const logger = createPlip({ 
+      devOnly: false,
+      enableColors: false,
+      enableEmojis: false 
+    });
+    
+    const contextLogger = logger
+      .withContext({ service: 'payment' })
+      .withContext({ version: '2.0.0', region: 'us-east-1' });
+    
+    contextLogger.error("Payment failed", { amount: 99.99 });
+    
+    expect(consoleLogs).toHaveLength(1);
+    expect(consoleLogs[0]).toContain("service");
+    expect(consoleLogs[0]).toContain("payment");
+    expect(consoleLogs[0]).toContain("version");
+    expect(consoleLogs[0]).toContain("2.0.0");
+    expect(consoleLogs[0]).toContain("region");
+    expect(consoleLogs[0]).toContain("us-east-1");
+    expect(consoleLogs[0]).toContain("amount");
+    expect(consoleLogs[0]).toContain("99.99");
+  });
+
+  test("withContext works without additional data", () => {
+    const logger = createPlip({ 
+      devOnly: false,
+      enableColors: false,
+      enableEmojis: false 
+    });
+    
+    const contextLogger = logger.withContext({ 
+      requestId: 'req-456' 
+    });
+    
+    contextLogger.warn("High memory usage detected");
+    
+    expect(consoleLogs).toHaveLength(1);
+    expect(consoleLogs[0]).toContain("requestId");
+    expect(consoleLogs[0]).toContain("req-456");
+    expect(consoleLogs[0]).toContain("High memory usage detected");
+  });
+
+  test("withContext chains with other configuration methods", () => {
+    const logger = createPlip({ devOnly: false })
+      .withEmojis(false)
+      .withColors(false)
+      .withContext({ module: 'test-module' });
+    
+    logger.success("Test completed", { duration: 150 });
+    
+    expect(consoleLogs).toHaveLength(1);
+    expect(consoleLogs[0]).toContain("module");
+    expect(consoleLogs[0]).toContain("test-module");
+    expect(consoleLogs[0]).toContain("duration");
+    expect(consoleLogs[0]).toContain("150");
+    expect(consoleLogs[0]).toContain("Test completed");
+  });
+
+  test("context is preserved across configure calls", () => {
+    const logger = createPlip({ 
+      devOnly: false,
+      enableColors: false,
+      enableEmojis: false 
+    });
+    
+    const contextLogger = logger
+      .withContext({ service: 'api' })
+      .configure({ enableSyntaxHighlighting: false });
+    
+    contextLogger.info("API request processed", { endpoint: '/users' });
+    
+    expect(consoleLogs).toHaveLength(1);
+    expect(consoleLogs[0]).toContain("service");
+    expect(consoleLogs[0]).toContain("api");
+    expect(consoleLogs[0]).toContain("endpoint");
+    expect(consoleLogs[0]).toContain("/users");
   });
 });

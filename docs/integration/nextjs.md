@@ -4,13 +4,25 @@ This guide covers integrating Plip Logger into your Next.js applications, includ
 
 ## Installation
 
-```bash
-npm install @ru-dr/plip
-# or
-yarn add @ru-dr/plip
-# or
-pnpm add @ru-dr/plip
+::: code-group
+
+```sh [npm]
+$ npm install @ru-dr/plip
 ```
+
+```sh [yarn]
+$ yarn add @ru-dr/plip
+```
+
+```sh [pnpm]
+$ pnpm add @ru-dr/plip
+```
+
+```sh [bun]
+$ bun add @ru-dr/plip
+```
+
+:::
 
 ## Basic Setup
 

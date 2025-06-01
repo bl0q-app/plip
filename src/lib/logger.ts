@@ -14,8 +14,9 @@ import { formatObject } from "../utils/colors.js";
 class PlipLogger {
   private config: Required<PlipConfig>;
   private theme: PlipTheme;
+  private context: Record<string, any>;
 
-  constructor(config: PlipConfig = {}) {
+  constructor(config: PlipConfig = {}, context: Record<string, any> = {}) {
     const isDev = isDevelopment();
     
     this.config = {
@@ -34,10 +35,11 @@ class PlipLogger {
       colors: { ...defaultTheme.colors, ...this.config.theme.colors },
       dimColors: { ...defaultTheme.dimColors, ...this.config.theme.dimColors },
     };
-  }
 
+    this.context = context;
+  }
   configure(newConfig: Partial<PlipConfig>): PlipLogger {
-    return new PlipLogger({ ...this.config, ...newConfig });
+    return new PlipLogger({ ...this.config, ...newConfig }, this.context);
   }
   
   private shouldLog(level: LogLevel): boolean {
@@ -75,12 +77,30 @@ class PlipLogger {
     
     return JSON.stringify(arg, null, 2);
   }
-
   private log(level: LogLevel, ...args: any[]): void {
     if (!this.shouldLog(level)) return;
 
-    const processedArgs = args.map(arg => this.processArgument(arg));
-    const message = processedArgs.join(" ");
+    // Handle context merging when there are object arguments and context exists
+    let processedArgs = args;
+    if (Object.keys(this.context).length > 0) {
+      // Find the last object argument to merge context with
+      const lastArgIndex = args.length - 1;
+      const lastArg = args[lastArgIndex];
+      
+      if (lastArg && typeof lastArg === 'object' && lastArg.constructor === Object) {
+        // Merge context with the last object argument
+        processedArgs = [
+          ...args.slice(0, lastArgIndex),
+          { ...this.context, ...lastArg }
+        ];
+      } else {
+        // No object to merge with, append context as a new argument
+        processedArgs = [...args, this.context];
+      }
+    }
+
+    const formattedArgs = processedArgs.map(arg => this.processArgument(arg));
+    const message = formattedArgs.join(" ");
 
     console.log(this.formatMessage(level, message));
   }
@@ -113,9 +133,12 @@ class PlipLogger {
   withTheme(theme: Partial<PlipTheme>): PlipLogger {
     return this.configure({ theme: { ...this.config.theme, ...theme } });
   }
-
   levels(...levels: LogLevel[]): PlipLogger {
     return this.configure({ enabledLevels: levels });
+  }
+
+  withContext(context: Record<string, any>): PlipLogger {
+    return new PlipLogger(this.config, { ...this.context, ...context });
   }
 }
 
@@ -123,7 +146,7 @@ class PlipLogger {
 export const plip = new PlipLogger(csrConfig);
 
 // Factory function for custom instances
-export const createPlip = (config: PlipConfig = {}) => new PlipLogger(config);
+export const createPlip = (config: PlipConfig = {}) => new PlipLogger(config, {});
 
 /**
  * Creates a logger optimized for SSR (Server-Side Rendering)
@@ -148,7 +171,7 @@ export const createPlip = (config: PlipConfig = {}) => new PlipLogger(config);
  * ```
  */
 export const createSSRLogger = (overrides: Partial<PlipConfig> = {}) => 
-  new PlipLogger(createSSRConfig(overrides));
+  new PlipLogger(createSSRConfig(overrides), {});
 
 /**
  * Creates a logger optimized for CSR (Client-Side Rendering)
@@ -173,7 +196,7 @@ export const createSSRLogger = (overrides: Partial<PlipConfig> = {}) =>
  * ```
  */
 export const createCSRLogger = (overrides: Partial<PlipConfig> = {}) => 
-  new PlipLogger(createCSRConfig(overrides));
+  new PlipLogger(createCSRConfig(overrides), {});
 
 /**
  * Pre-configured SSR logger instance
