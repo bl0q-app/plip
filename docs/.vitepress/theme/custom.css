@@ -50,11 +50,10 @@
 }
 
 .VPHero .text {
-  background: linear-gradient(120deg, var(--vp-c-brand-1) 30%, var(--vp-c-brand-2));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: white;
 }
+
+
 
 /* Feature icons */
 .VPFeature .icon {
