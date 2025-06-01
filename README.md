@@ -1,74 +1,402 @@
-# 🎨 Plip Logger
+<div align="center">
 
-A beautiful, colorful logger library with emojis and syntax highlighting for Node.js applications.
+# 🫧 Plip Logger
 
-## Features
+*A delightful, colorful logging experience for modern Node.js applications*
 
-- 🌈 **Colorful output** with automatic terminal detection
-- 😊 **Emoji support** for visual appeal
-- 🎯 **Multiple log levels** (info, warn, error, success, debug, trace, verbose)
-- 🔍 **Syntax highlighting** for objects and arrays
-- ⚙️ **Flexible configuration** with method chaining
-- 🔧 **Development/Production modes**
-- 📦 **TypeScript support** with full type definitions
+[![npm version](https://badge.fury.io/js/@ru-dr%2Fplip.svg)](https://badge.fury.io/js/@ru-dr%2Fplip)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
 
-## Installation
+[Installation](#installation) • [Quick Start](#quick-start) • [Documentation](#api-documentation) • [Examples](#examples) • [Contributing](#contributing)
+
+</div>
+
+---
+
+## ✨ Why Plip?
+
+Tired of boring console logs? **Plip** brings joy back to logging with:
+
+- 🌈 **Smart Colors** - Automatic terminal detection with beautiful color schemes
+- 😊 **Expressive Emojis** - Visual context that makes logs easier to scan
+- 🎯 **7 Log Levels** - From `verbose` to `error`, perfect granularity
+- 🔍 **Syntax Highlighting** - JSON objects rendered beautifully
+- ⚙️ **Fluent API** - Chain methods for elegant configuration
+- 🚀 **Zero Config** - Works great out of the box
+- 📦 **TypeScript First** - Full type safety and IntelliSense
+- 🔧 **Environment Aware** - Respects `NODE_ENV` and terminal capabilities
+
+## 📦 Installation
 
 ```bash
-npm install @your-username/plip
+# npm
+npm install @ru-dr/plip
+
+# yarn
+yarn add @ru-dr/plip
+
+# pnpm
+pnpm add @ru-dr/plip
+
+# bun
+bun add @ru-dr/plip
 ```
 
-## Quick Start
+## 🚀 Quick Start
+
+Get logging in seconds:
 
 ```typescript
-import { plip } from 'plip';
+import { plip } from '@ru-dr/plip';
 
-plip.info("Hello, world!");
-plip.success("Operation completed!");
-plip.error("Something went wrong!");
-plip.warn("Be careful!");
+plip.info("🎉 Welcome to Plip!");
+plip.success("✅ Everything is working perfectly");
+plip.warn("⚠️  This might need your attention");
+plip.error("💥 Something went wrong");
 
-// Log objects with syntax highlighting
-plip.info("User data:", { name: "John", age: 30, active: true });
-```
-
-## API Documentation
-
-### Basic Usage
-
-```typescript
-import { plip, createPlip } from 'plip';
-
-// Use default logger
-plip.info("Application started");
-plip.error("Error occurred:", error);
-
-// Create custom logger
-const logger = createPlip({
-  enableEmojis: true,
-  enableColors: true,
-  enabledLevels: ['info', 'error']
+// Log complex objects with beautiful syntax highlighting
+plip.info("User profile:", {
+  name: "Alex Developer",
+  age: 28,
+  skills: ["TypeScript", "Node.js", "React"],
+  active: true
 });
 ```
 
-### Configuration Options
+**Output Preview:**
+```
+🫧 [INFO] 🎉 Welcome to Plip!
+🎉 [SUCCESS] ✅ Everything is working perfectly
+⚠️ [WARN] ⚠️  This might need your attention
+💥 [ERROR] 💥 Something went wrong
+🫧 [INFO] User profile: {
+  "name": "Alex Developer",
+  "age": 28,
+  "skills": ["TypeScript", "Node.js", "React"],
+  "active": true
+}
+```
 
-- `silent`: Suppress all output
-- `enableEmojis`: Show emojis (auto-detected)
-- `enableColors`: Use colors (auto-detected)  
-- `enableSyntaxHighlighting`: Highlight object syntax
-- `devOnly`: Only log in development
-- `enabledLevels`: Array of levels to enable
+## 📚 API Documentation
 
-### Method Chaining
+### Creating Logger Instances
+
+```typescript
+import { plip, createPlip } from '@ru-dr/plip';
+
+// Use the default logger (recommended for most cases)
+plip.info("Using default logger");
+
+// Create a custom logger with specific configuration
+const customLogger = createPlip({
+  enableEmojis: true,
+  enableColors: true,
+  enabledLevels: ['info', 'warn', 'error']
+});
+
+// Create a production logger
+const prodLogger = createPlip({
+  enableEmojis: false,
+  enableColors: false,
+  enabledLevels: ['warn', 'error']
+});
+```
+
+### 🎨 Log Levels
+
+Plip provides 7 distinct log levels, each with its own emoji and color:
+
+| Level | Emoji | Description | Use Case |
+|-------|-------|-------------|----------|
+| `info` | 🫧 | General information | App status, user actions |
+| `success` | 🎉 | Success messages | Completed operations |
+| `warn` | ⚠️ | Warning messages | Deprecated features, recoverable errors |
+| `error` | 💥 | Error messages | Exceptions, failures |
+| `debug` | 🔍 | Debug information | Development debugging |
+| `trace` | 🛰️ | Detailed tracing | Performance monitoring |
+| `verbose` | 📢 | Verbose output | Detailed system information |
+
+```typescript
+// Using all log levels
+plip.info("Application started successfully");
+plip.success("User authenticated");
+plip.warn("API rate limit approaching");
+plip.error("Database connection failed");
+plip.debug("Processing user request", { userId: 123 });
+plip.trace("Function execution time: 45ms");
+plip.verbose("System memory usage:", process.memoryUsage());
+```
+
+### ⚙️ Configuration Options
+
+Customize Plip to fit your needs:
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `silent` | `boolean` | `false` | Suppress all output |
+| `enableEmojis` | `boolean` | `auto-detect` | Show emoji indicators |
+| `enableColors` | `boolean` | `auto-detect` | Use colorized output |
+| `enableSyntaxHighlighting` | `boolean` | `true` | Highlight object syntax |
+| `devOnly` | `boolean` | `auto-detect` | Only log in development |
+| `enabledLevels` | `LogLevel[]` | `all` | Array of levels to enable |
+| `theme` | `Partial<PlipTheme>` | `default` | Custom colors and emojis |
+
+```typescript
+const logger = createPlip({
+  silent: false,
+  enableEmojis: true,
+  enableColors: true,
+  enableSyntaxHighlighting: true,
+  devOnly: false,
+  enabledLevels: ['info', 'warn', 'error', 'success'],
+  theme: {
+    emojis: {
+      info: "ℹ️",
+      success: "✅"
+    },
+    colors: {
+      info: customBlueColor,
+      success: customGreenColor
+    }
+  }
+});
+```
+
+### 🔗 Fluent API (Method Chaining)
+
+Build your perfect logger with our fluent, chainable API:
 
 ```typescript
 const logger = plip
-  .withColors(true)
-  .withEmojis(true)
-  .levels('info', 'error', 'success');
+  .withColors(true)           // Enable colors
+  .withEmojis(true)           // Enable emojis
+  .withSyntaxHighlighting(true) // Enable JSON highlighting
+  .levels('info', 'error', 'success') // Only these levels
+  .silent();                  // Make it silent
+
+// Each method returns a new logger instance
+const devLogger = plip.levels('debug', 'trace', 'verbose');
+const prodLogger = plip.levels('warn', 'error').withEmojis(false);
 ```
 
-## License
+**Available Fluent Methods:**
+- `.withColors(enabled)` - Toggle color output
+- `.withEmojis(enabled)` - Toggle emoji indicators  
+- `.withSyntaxHighlighting(enabled)` - Toggle object highlighting
+- `.withTheme(theme)` - Apply custom theme
+- `.levels(...levels)` - Filter enabled log levels
+- `.silent()` - Suppress all output
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+## 💡 Examples
+
+### Basic Logging
+```typescript
+import { plip } from '@ru-dr/plip';
+
+// Simple messages
+plip.info("Server starting on port 3000");
+plip.success("Database connected successfully");
+
+// With data
+plip.info("New user registered:", { email: "user@example.com", id: 123 });
+plip.error("Authentication failed:", { reason: "invalid_token", userId: 456 });
+```
+
+### Environment-Specific Logging
+```typescript
+import { createPlip } from '@ru-dr/plip';
+
+// Development logger - verbose and colorful
+const devLogger = createPlip({
+  enabledLevels: ['debug', 'trace', 'info', 'warn', 'error'],
+  enableEmojis: true,
+  enableColors: true
+});
+
+// Production logger - errors and warnings only
+const prodLogger = createPlip({
+  enabledLevels: ['warn', 'error'],
+  enableEmojis: false,
+  enableColors: false,
+  enableSyntaxHighlighting: false
+});
+
+// Use based on environment
+const logger = process.env.NODE_ENV === 'production' ? prodLogger : devLogger;
+```
+
+### Custom Themes
+```typescript
+import { createPlip, colors } from '@ru-dr/plip';
+
+const logger = createPlip({
+  theme: {
+    emojis: {
+      info: "📘",
+      success: "✅", 
+      warn: "⚠️",
+      error: "❌"
+    },
+    colors: {
+      info: colors.blue,
+      success: colors.green,
+      warn: colors.yellow,
+      error: colors.red
+    }
+  }
+});
+```
+
+### Conditional Logging
+```typescript
+import { createPlip } from '@ru-dr/plip';
+
+// Only log in development
+const debugLogger = createPlip({ devOnly: true });
+
+// Custom conditions
+const logger = createPlip({
+  enabledLevels: process.env.DEBUG ? 
+    ['debug', 'trace', 'info', 'warn', 'error'] : 
+    ['warn', 'error']
+});
+```
+
+## 🛠️ Advanced Usage
+
+### TypeScript Integration
+```typescript
+import { PlipConfig, LogLevel, createPlip } from '@ru-dr/plip';
+
+// Type-safe configuration
+const config: PlipConfig = {
+  enabledLevels: ['info', 'error'] as LogLevel[],
+  enableColors: true,
+  theme: {
+    emojis: {
+      info: "💡",
+      error: "🚨"
+    }
+  }
+};
+
+const logger = createPlip(config);
+```
+
+### Framework Integration
+
+#### Express.js Middleware
+```typescript
+import express from 'express';
+import { createPlip } from '@ru-dr/plip';
+
+const logger = createPlip();
+const app = express();
+
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.path}`, {
+    ip: req.ip,
+    userAgent: req.get('User-Agent')
+  });
+  next();
+});
+```
+
+#### Error Handling
+```typescript
+import { createPlip } from '@ru-dr/plip';
+
+const logger = createPlip();
+
+process.on('uncaughtException', (error) => {
+  logger.error('Uncaught Exception:', {
+    message: error.message,
+    stack: error.stack,
+    timestamp: new Date().toISOString()
+  });
+  process.exit(1);
+});
+
+try {
+  // Your application logic
+} catch (error) {
+  logger.error('Application error:', error);
+}
+```
+
+## 🤝 Contributing
+
+We love contributions! Here's how you can help make Plip even better:
+
+### 🐛 Found a Bug?
+- Check if it's already reported in [Issues](https://github.com/ru-dr/plip/issues)
+- If not, [create a new issue](https://github.com/ru-dr/plip/issues/new) with:
+  - Clear description of the problem
+  - Steps to reproduce
+  - Expected vs actual behavior
+  - Your environment details
+
+### 💡 Have an Idea?
+- [Open a feature request](https://github.com/ru-dr/plip/issues/new)
+- Join our discussions
+- Check our [roadmap](https://github.com/ru-dr/plip/projects) for planned features
+
+### 🔧 Want to Code?
+1. **Fork** the repository
+2. **Clone** your fork: `git clone https://github.com/YOUR_USERNAME/plip.git`
+3. **Create** a branch: `git checkout -b feature/amazing-feature`
+4. **Install** dependencies: `bun install`
+5. **Make** your changes
+6. **Test** your changes: `bun test`
+7. **Build** the project: `bun run build`
+8. **Commit** your changes: `git commit -m 'Add amazing feature'`
+9. **Push** to your branch: `git push origin feature/amazing-feature`
+10. **Open** a Pull Request
+
+### 📝 Development Setup
+```bash
+# Clone the repository
+git clone https://github.com/ru-dr/plip.git
+cd plip
+
+# Install dependencies
+bun install
+
+# Run tests
+bun test
+
+# Run tests in watch mode
+bun test --watch
+
+# Build the project
+bun run build
+
+# Test your changes
+bun run dev
+```
+
+### 🧪 Testing
+We use [Bun](https://bun.sh/) for testing. Please ensure:
+- All tests pass: `bun test`
+- Add tests for new features
+- Maintain or improve code coverage
+- Follow existing test patterns
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+**TL;DR:** You can use, modify, and distribute this project freely. Just keep the copyright notice! 😊
+
+---
+
+<div align="center">
+
+**Made with ❤️ by [ru-dr](https://github.com/ru-dr)**
+
+⭐ **Star this repo if you find it useful!** ⭐
+
+[Report Bug](https://github.com/ru-dr/plip/issues) • [Request Feature](https://github.com/ru-dr/plip/issues) • [Discussions](https://github.com/ru-dr/plip/discussions)
+
+</div>
