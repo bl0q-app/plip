@@ -87,7 +87,7 @@ plip.info("General information messages");
 plip.success("Success and completion messages");
 plip.warn("Warning messages for potential issues");
 plip.error("Error messages for failures");
-plip.fatal("Critical errors that may crash the app");
+plip.trace("Execution trace information");
 ```
 
 Each level has its own emoji, color scheme, and semantic meaning.

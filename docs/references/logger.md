@@ -108,13 +108,13 @@ plip.error("Payment processing error", { orderId: "123", error: error.message })
 
 ---
 
-#### `plip.fatal(message, ...args)`
+#### `plip.trace(message, ...args)`
 
-Logs critical errors that may cause application termination.
+Logs execution trace information for detailed debugging.
 
 ```typescript
-plip.fatal("Out of memory", { heapUsed: process.memoryUsage().heapUsed });
-plip.fatal("Critical service unavailable", { service: "database", error });
+plip.trace("Function call trace", { function: "processUser", args: [123] });
+plip.trace("Execution path", { step: "validation", result: "passed" });
 ```
 
 **Parameters:**

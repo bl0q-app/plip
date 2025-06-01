@@ -27,11 +27,11 @@ plip.warn("API response time exceeded threshold", { responseTime: 1500 });
 // ✅ ERROR - Actual problems
 plip.error("Failed to connect to database", error);
 
-// ✅ FATAL - Critical system failures
-plip.fatal("Out of memory - application terminating");
+// ✅ TRACE - System tracing and diagnostics  
+plip.trace("Request processing completed", { requestId, duration });
 ```
 
-### Level Hierarchy
+### Level Guidelines
 
 Understand when each level should be used:
 
@@ -41,7 +41,7 @@ Understand when each level should be used:
 - **SUCCESS**: Successful operations, milestones
 - **WARN**: Degraded functionality, recoverable errors
 - **ERROR**: Error conditions, failed operations
-- **FATAL**: Application-stopping errors
+- **TRACE**: System tracing, diagnostics, and request tracking
 
 ## Message Formatting
 

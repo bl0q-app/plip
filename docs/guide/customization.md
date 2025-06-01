@@ -62,7 +62,7 @@ const debugLogger = createPlip({
 
 // Production logger - warnings and above
 const prodLogger = createPlip({
-  enabledLevels: ['warn', 'error', 'fatal']
+  enabledLevels: ['warn', 'error']
 });
 ```
 
@@ -74,10 +74,9 @@ Create loggers that adapt to runtime conditions:
 const createConditionalLogger = (isDevelopment: boolean) => {
   return createPlip({
     enableEmojis: isDevelopment,
-    enableColors: isDevelopment,
-    enabledLevels: isDevelopment 
-      ? ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'fatal']
-      : ['warn', 'error', 'fatal']
+    enableColors: isDevelopment,    enabledLevels: isDevelopment 
+      ? ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
+      : ['warn', 'error', 'trace']
   });
 };
 
@@ -109,7 +108,7 @@ dbLogger.error("🗃️ Query failed:", error);
 const authLogger = createPlip({
   enableEmojis: true,
   enableColors: true,
-  enabledLevels: ['info', 'warn', 'error', 'fatal']
+  enabledLevels: ['info', 'warn', 'error', 'trace']
 });
 
 // Usage
@@ -141,12 +140,12 @@ apiLogger.error("🌐 API error:", { endpoint, status, error });
 const devLogger = createPlip({
   enableEmojis: true,
   enableColors: true,
-  enabledLevels: ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'fatal']
+  enabledLevels: ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
 });
 
 // Rich, detailed logging for development
 devLogger.verbose("🔍 Variable state:", { currentUser, sessionData });
-devLogger.debug("🐛 Function called:", { functionName: 'processOrder', args });
+devLogger.debug("🔍 Function called:", { functionName: 'processOrder', args });
 devLogger.success("🎉 Development server ready!");
 ```
 
@@ -156,7 +155,7 @@ devLogger.success("🎉 Development server ready!");
 const prodLogger = createPlip({
   enableEmojis: false,  // Cleaner for log aggregation
   enableColors: false,  // Better for file logging
-  enabledLevels: ['info', 'warn', 'error', 'fatal']
+  enabledLevels: ['info', 'warn', 'error', 'trace']
 });
 
 // Focused, essential logging for production
@@ -171,7 +170,7 @@ prodLogger.error("Service unavailable", { service: 'payment', error });
 const testLogger = createPlip({
   enableEmojis: false,
   enableColors: false,
-  enabledLevels: ['error', 'fatal']  // Only critical issues during tests
+  enabledLevels: ['error', 'trace']  // Only critical issues during tests
 });
 ```
 
@@ -194,14 +193,13 @@ const createCustomLogger = (options: LoggerOptions) => {
   
   const config = {
     enableEmojis: !isProd && !isTest,
-    enableColors: !isTest,
-    enabledLevels: [
+    enableColors: !isTest,    enabledLevels: [
       ...(includeDebug ? ['verbose', 'debug'] : []),
       'info',
       'success',
       'warn',
       'error',
-      'fatal'
+      'trace'
     ] as const
   };
   
@@ -232,10 +230,9 @@ class AdaptiveLogger {
     enableColors: true,
     enabledLevels: ['info', 'warn', 'error']
   });
-  
-  setDebugMode(enabled: boolean) {
+    setDebugMode(enabled: boolean) {
     const levels = enabled 
-      ? ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'fatal']
+      ? ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
       : ['info', 'warn', 'error'];
     
     this.logger = createPlip({
@@ -245,13 +242,12 @@ class AdaptiveLogger {
     });
   }
   
-  setProductionMode(enabled: boolean) {
-    this.logger = createPlip({
+  setProductionMode(enabled: boolean) {    this.logger = createPlip({
       enableEmojis: !enabled,
       enableColors: !enabled,
       enabledLevels: enabled 
-        ? ['warn', 'error', 'fatal']
-        : ['info', 'success', 'warn', 'error', 'fatal']
+        ? ['warn', 'error', 'trace']
+        : ['info', 'success', 'warn', 'error', 'trace']
     });
   }
   
@@ -278,9 +274,8 @@ const createFeatureAwareLogger = () => {
   
   return createPlip({
     enableEmojis: features.emojis,
-    enableColors: features.colors,
-    enabledLevels: features.verbose 
-      ? ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'fatal']
+    enableColors: features.colors,    enabledLevels: features.verbose 
+      ? ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
       : ['info', 'warn', 'error']
   });
 };
@@ -319,11 +314,10 @@ dbMiddleware.error("Connection failed", { host: 'localhost' });
 ### Structured Logging
 
 ```typescript
-const createStructuredLogger = (service: string, version: string) => {
-  const logger = createPlip({
+const createStructuredLogger = (service: string, version: string) => {  const logger = createPlip({
     enableEmojis: false,
     enableColors: true,
-    enabledLevels: ['info', 'warn', 'error', 'fatal']
+    enabledLevels: ['info', 'warn', 'error', 'trace']
   });
   
   const addMetadata = (data: any = {}) => ({
@@ -338,11 +332,10 @@ const createStructuredLogger = (service: string, version: string) => {
     info: (message: string, data?: any) => 
       logger.info(message, addMetadata(data)),
     warn: (message: string, data?: any) => 
-      logger.warn(message, addMetadata(data)),
-    error: (message: string, data?: any) => 
+      logger.warn(message, addMetadata(data)),    error: (message: string, data?: any) => 
       logger.error(message, addMetadata(data)),
-    fatal: (message: string, data?: any) => 
-      logger.fatal(message, addMetadata(data))
+    trace: (message: string, data?: any) => 
+      logger.trace(message, addMetadata(data))
   };
 };
 
@@ -362,12 +355,12 @@ export const LOGGER_CONFIGS = {
   development: {
     enableEmojis: true,
     enableColors: true,
-    enabledLevels: ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'fatal']
+    enabledLevels: ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
   },
   production: {
     enableEmojis: false,
     enableColors: false,
-    enabledLevels: ['info', 'warn', 'error', 'fatal']
+    enabledLevels: ['info', 'warn', 'error', 'trace']
   }
 } as const;
 ```

@@ -71,7 +71,7 @@ Example: `PLIP_E01001` (Configuration error #001)
   "code": "PLIP_E01003",
   "message": "Invalid log level: 'verbose'",
   "provided": "verbose",
-  "valid": ["debug", "info", "warn", "error", "fatal"]
+  "valid": ["debug", "info", "warn", "error", "trace"]
 }
 ```
 

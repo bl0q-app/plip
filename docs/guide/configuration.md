@@ -33,16 +33,20 @@ const customLogger = createPlip({
 
 ```typescript
 interface PlipConfig {
-  enableEmojis?: boolean;      // Enable/disable emoji prefixes
-  enableColors?: boolean;      // Enable/disable color output
-  enabledLevels?: LogLevel[];  // Array of enabled log levels
+  silent?: boolean;                    // Disable all logging output
+  enableEmojis?: boolean;              // Enable/disable emoji prefixes
+  enableColors?: boolean;              // Enable/disable color output
+  enableSyntaxHighlighting?: boolean;  // Enable/disable object syntax highlighting
+  theme?: Partial<PlipTheme>;          // Custom theme configuration
+  enabledLevels?: LogLevel[];          // Array of enabled log levels
+  devOnly?: boolean;                   // Only log in development environment
 }
 ```
 
 ### Available Log Levels
 
 ```typescript
-type LogLevel = 'verbose' | 'debug' | 'info' | 'success' | 'warn' | 'error' | 'fatal';
+type LogLevel = 'verbose' | 'debug' | 'info' | 'success' | 'warn' | 'error' | 'trace';
 ```
 
 ## Configuration Examples
@@ -53,9 +57,11 @@ Optimized for production environments:
 
 ```typescript
 const prodLogger = createPlip({
-  enableEmojis: false,    // Cleaner for log aggregation
-  enableColors: false,    // Better for file logging
-  enabledLevels: ['info', 'warn', 'error', 'fatal']
+  silent: false,              // Allow logging but be selective
+  enableEmojis: false,        // Cleaner for log aggregation
+  enableColors: false,        // Better for file logging
+  enableSyntaxHighlighting: false, // Simpler output
+  enabledLevels: ['info', 'warn', 'error']
 });
 ```
 
@@ -65,9 +71,10 @@ Enhanced for development experience:
 
 ```typescript
 const devLogger = createPlip({
-  enableEmojis: true,     // Visual context
-  enableColors: true,     // Beautiful output
-  enabledLevels: ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'fatal']
+  enableEmojis: true,         // Visual context
+  enableColors: true,         // Beautiful output
+  enableSyntaxHighlighting: true, // Rich object formatting
+  enabledLevels: ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
 });
 ```
 
@@ -79,7 +86,8 @@ Only essential messages:
 const minimalLogger = createPlip({
   enableEmojis: false,
   enableColors: false,
-  enabledLevels: ['error', 'fatal']
+  enableSyntaxHighlighting: false,
+  enabledLevels: ['error']
 });
 ```
 
@@ -91,7 +99,8 @@ For troubleshooting:
 const debugLogger = createPlip({
   enableEmojis: true,
   enableColors: true,
-  enabledLevels: ['verbose', 'debug']
+  enableSyntaxHighlighting: true,
+  enabledLevels: ['verbose', 'debug', 'trace']
 });
 ```
 
@@ -118,11 +127,10 @@ const isProd = process.env.NODE_ENV === 'production';
 const isTest = process.env.NODE_ENV === 'test';
 
 const logger = createPlip({
-  enableEmojis: !isProd,
-  enableColors: !isTest,
+  enableEmojis: !isProd,  enableColors: !isTest,
   enabledLevels: isProd 
-    ? ['info', 'warn', 'error', 'fatal']
-    : ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'fatal']
+    ? ['info', 'warn', 'error']
+    : ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
 });
 ```
 
@@ -149,7 +157,7 @@ const apiLogger = createPlip({
 const securityLogger = createPlip({
   enableEmojis: false,
   enableColors: false,
-  enabledLevels: ['warn', 'error', 'fatal']
+  enabledLevels: ['warn', 'error']
 });
 ```
 
@@ -185,11 +193,10 @@ const getLoggerConfig = (): PlipConfig => {
     enableColors: true,
     enabledLevels: ['info', 'warn', 'error']
   };
-
   // Modify based on environment
   if (process.env.NODE_ENV === 'production') {
     config.enableEmojis = false;
-    config.enabledLevels = ['warn', 'error', 'fatal'];
+    config.enabledLevels = ['warn', 'error'];
   }
 
   if (process.env.CI) {

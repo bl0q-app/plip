@@ -35,21 +35,27 @@ type LogLevel = 'debug' | 'info' | 'warn' | 'error' | 'silent'
 
 **Example:**
 ```typescript
-const logger = new Logger({ level: 'debug' })
+// Configure specific levels to enable
+logger.config({ enabledLevels: ['info', 'error'] })
 
-// These will be output (debug level and above)
-logger.debug('Debug message')
-logger.info('Info message')
-logger.warn('Warning message')
-logger.error('Error message')
+// These will be output
+logger.info('Info message')      // Will be shown
+logger.error('Error message')    // Will be shown
+
+// These will NOT be output  
+logger.debug('Debug message')    // Won't be shown
+logger.warn('Warning message')   // Won't be shown
 ```
 
-**Level Hierarchy:**
-- `debug`: Shows all messages
-- `info`: Shows info, warn, and error messages
-- `warn`: Shows warn and error messages
-- `error`: Shows only error messages
-- `silent`: Shows no messages
+**Available Levels:**
+Each level must be explicitly enabled or disabled. There is no hierarchical system - you choose exactly which levels to display:
+- `verbose`: Detailed debugging information  
+- `debug`: Development debugging
+- `info`: General information
+- `success`: Success messages
+- `warn`: Warning messages
+- `error`: Error messages
+- `trace`: System tracing and diagnostics
 
 ### timestamp
 

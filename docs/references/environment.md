@@ -1,207 +1,144 @@
 # Environment Variables
 
-Plip Logger supports various environment variables for configuration, allowing you to adjust logging behavior without code changes across different environments.
+Plip Logger responds to several standard environment variables that affect color output and terminal behavior. Plip does not have custom environment variables for configuration - instead, use the configuration options when creating a logger instance.
 
-## Core Environment Variables
+## Color Control Variables
 
-### PLIP_LOG_LEVEL
+Plip Logger automatically detects and respects standard color environment variables:
 
-Controls the minimum log level that will be output.
+### NO_COLOR
+
+Disables all color output when set (any value).
 
 ```bash
-PLIP_LOG_LEVEL=info
+NO_COLOR=1 node app.js
+```
+
+**Effect:** Forces all logger output to be plain text without colors, regardless of other settings.
+
+### FORCE_COLOR
+
+Forces color output even when not connected to a TTY.
+
+```bash
+FORCE_COLOR=1 node app.js
 ```
 
 **Values:**
-- `debug` (0) - Show all logs
-- `info` (1) - Show info, warn, error, fatal
-- `warn` (2) - Show warn, error, fatal
-- `error` (3) - Show error, fatal
-- `fatal` (4) - Show only fatal logs
+- `0` - Force disable colors
+- `1` - Force enable colors  
+- `2` - Force enable colors with 256-color support
+- `3` - Force enable colors with 16m-color support
 
-**Default:** `info`
+### TERM
 
-### PLIP_LOG_FORMAT
-
-Specifies the output format for log messages.
+Terminal type identifier used for color capability detection.
 
 ```bash
-PLIP_LOG_FORMAT=json
+TERM=xterm-256color
 ```
 
-**Values:**
-- `pretty` - Human-readable colored output
-- `json` - Structured JSON output
-- `simple` - Plain text output
+**Common values:**
+- `dumb` - No color support
+- `xterm` - Basic color support
+- `xterm-256color` - 256-color support
+- `screen` - Screen/tmux support
 
-**Default:** `pretty` (development), `json` (production)
+## Development Environment Variables
 
-### PLIP_LOG_FILE
+### NODE_ENV
 
-Path to the log file for file output.
+Affects default behavior in some cases.
 
 ```bash
-PLIP_LOG_FILE=/var/log/app.log
+NODE_ENV=production
 ```
 
-**Default:** `undefined` (console only)
+**Effect:** When set to `production`, some terminal features may behave differently for performance.
 
-### PLIP_LOG_MAX_SIZE
+### CI
 
-Maximum size of log files before rotation (requires file logging).
+Indicates running in a Continuous Integration environment.
 
 ```bash
-PLIP_LOG_MAX_SIZE=10MB
+CI=true
 ```
 
-**Values:**
-- Size with units: `10MB`, `1GB`, `500KB`
-- Bytes: `10485760`
+**Effect:** May affect color output and terminal detection in CI environments.
 
-**Default:** `10MB`
+### TERM_PROGRAM
 
-### PLIP_LOG_MAX_FILES
-
-Maximum number of rotated log files to keep.
+Identifies the terminal program being used.
 
 ```bash
-PLIP_LOG_MAX_FILES=5
+TERM_PROGRAM=iTerm.app
 ```
 
-**Default:** `5`
+**Common values:**
+- `iTerm.app` - iTerm2
+- `Terminal.app` - macOS Terminal
+- `vscode` - VS Code integrated terminal
 
-## Advanced Environment Variables
+## Configuration via Code
 
-### PLIP_LOG_TIMESTAMP
+Since Plip doesn't use custom environment variables, configure the logger programmatically:
 
-Controls timestamp format in log messages.
+```javascript
+import { logger } from 'plip';
 
-```bash
-PLIP_LOG_TIMESTAMP=iso
+// Configure colors based on environment
+const isProduction = process.env.NODE_ENV === 'production';
+const disableColors = process.env.NO_COLOR || isProduction;
+
+logger.config({
+  enableColors: !disableColors,
+  enableEmojis: !isProduction,
+  silent: process.env.NODE_ENV === 'test'
+});
 ```
 
-**Values:**
-- `iso` - ISO 8601 format (2024-01-15T10:30:45.123Z)
-- `epoch` - Unix timestamp (1705315845123)
-- `relative` - Relative time from start
-- `false` - No timestamps
-
-**Default:** `iso`
-
-### PLIP_LOG_COLORS
-
-Enable or disable colored output (pretty format only).
-
-```bash
-PLIP_LOG_COLORS=false
-```
-
-**Values:**
-- `true` - Enable colors
-- `false` - Disable colors
-- `auto` - Auto-detect based on terminal support
-
-**Default:** `auto`
-
-### PLIP_LOG_REDACT
-
-Comma-separated list of fields to redact in logs.
-
-```bash
-PLIP_LOG_REDACT=password,token,secret,key
-```
-
-**Default:** `password,token,secret,key,authorization`
-
-### PLIP_LOG_INCLUDE_STACK
-
-Include stack traces in error logs.
-
-```bash
-PLIP_LOG_INCLUDE_STACK=true
-```
-
-**Default:** `true`
-
-### PLIP_LOG_BUFFER_SIZE
-
-Buffer size for batched logging (performance optimization).
-
-```bash
-PLIP_LOG_BUFFER_SIZE=1000
-```
-
-**Default:** `100`
-
-### PLIP_LOG_FLUSH_INTERVAL
-
-Interval (ms) for flushing buffered logs.
-
-```bash
-PLIP_LOG_FLUSH_INTERVAL=5000
-```
-
-**Default:** `1000`
-
-## Framework-Specific Variables
-
-### Express.js
-
-```bash
-PLIP_EXPRESS_LOG_REQUESTS=true
-PLIP_EXPRESS_LOG_RESPONSES=false
-PLIP_EXPRESS_LOG_ERRORS=true
-```
-
-### Fastify
-
-```bash
-PLIP_FASTIFY_LOG_REQUESTS=true
-PLIP_FASTIFY_SERIALIZERS=true
-```
-
-### Next.js
-
-```bash
-PLIP_NEXTJS_LOG_API=true
-PLIP_NEXTJS_LOG_SSR=false
-PLIP_NEXTJS_LOG_STATIC=false
-```
-
-## Environment-Specific Configurations
+## Environment-Specific Setup
 
 ### Development
 
-```bash
-# .env.development
-PLIP_LOG_LEVEL=debug
-PLIP_LOG_FORMAT=pretty
-PLIP_LOG_COLORS=true
-PLIP_LOG_INCLUDE_STACK=true
+```javascript
+// config/development.js
+import { logger } from 'plip';
+
+logger.config({
+  enableColors: true,
+  enableEmojis: true,
+  enableSyntaxHighlighting: true,
+  enabledLevels: ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
+});
 ```
 
 ### Production
 
-```bash
-# .env.production
-PLIP_LOG_LEVEL=info
-PLIP_LOG_FORMAT=json
-PLIP_LOG_FILE=/var/log/app.log
-PLIP_LOG_COLORS=false
-PLIP_LOG_MAX_SIZE=50MB
-PLIP_LOG_MAX_FILES=10
+```javascript
+// config/production.js
+import { logger } from 'plip';
+
+logger.config({
+  enableColors: false,
+  enableEmojis: false,
+  enableSyntaxHighlighting: false,
+  enabledLevels: ['info', 'success', 'warn', 'error']
+});
 ```
 
 ### Testing
 
-```bash
-# .env.test
-PLIP_LOG_LEVEL=error
-PLIP_LOG_FORMAT=simple
-PLIP_LOG_COLORS=false
+```javascript
+// config/test.js
+import { logger } from 'plip';
+
+logger.config({
+  silent: true // Disable all logging during tests
+});
 ```
 
-## Docker Environment Variables
+## Docker and Container Environments
 
 ### Docker Compose
 
@@ -211,12 +148,9 @@ version: '3.8'
 services:
   app:
     environment:
-      - PLIP_LOG_LEVEL=info
-      - PLIP_LOG_FORMAT=json
-      - PLIP_LOG_COLORS=false
-      - PLIP_LOG_FILE=/app/logs/app.log
-    volumes:
-      - ./logs:/app/logs
+      - NODE_ENV=production
+      - NO_COLOR=1  # Disable colors in containers
+      - TERM=dumb   # Indicate simple terminal
 ```
 
 ### Kubernetes
@@ -231,121 +165,54 @@ spec:
       containers:
       - name: app
         env:
-        - name: PLIP_LOG_LEVEL
-          value: "info"
-        - name: PLIP_LOG_FORMAT
-          value: "json"
-        - name: PLIP_LOG_COLORS
-          value: "false"
-```
-
-## Configuration Priority
-
-Environment variables override configuration file settings:
-
-1. **Environment Variables** (highest priority)
-2. **Configuration File** (`.pliprc.json`)
-3. **Constructor Options**
-4. **Default Values** (lowest priority)
-
-## Validation and Error Handling
-
-Invalid environment variable values will:
-
-1. Log a warning message
-2. Fall back to default values
-3. Continue execution (fail-safe behavior)
-
-### Example Error Messages
-
-```bash
-# Invalid log level
-WARN: Invalid PLIP_LOG_LEVEL value 'invalid'. Using default 'info'.
-
-# Invalid file size
-WARN: Invalid PLIP_LOG_MAX_SIZE value 'invalid'. Using default '10MB'.
-
-# Invalid boolean
-WARN: Invalid PLIP_LOG_COLORS value 'maybe'. Using default 'auto'.
-```
-
-## Runtime Configuration Changes
-
-Some environment variables can be changed at runtime:
-
-```javascript
-// Change log level at runtime
-process.env.PLIP_LOG_LEVEL = 'debug';
-logger.reloadConfig();
-
-// Monitor environment changes
-logger.on('configChanged', (config) => {
-  console.log('Configuration updated:', config);
-});
-```
-
-## Environment Variable Tools
-
-### dotenv Integration
-
-```javascript
-// Load environment variables from .env file
-require('dotenv').config();
-const { Logger } = require('plip-logger');
-
-const logger = new Logger(); // Uses env vars automatically
-```
-
-### Configuration Validation
-
-```javascript
-const { validateEnvConfig } = require('plip-logger/utils');
-
-// Validate current environment configuration
-const validation = validateEnvConfig();
-if (!validation.valid) {
-  console.error('Invalid environment configuration:', validation.errors);
-}
+        - name: NODE_ENV
+          value: "production"
+        - name: NO_COLOR
+          value: "1"
 ```
 
 ## Best Practices
 
-### 1. Use Environment-Specific Files
+### 1. Respect Standard Variables
 
-```bash
-.env.development
-.env.production
-.env.staging
-.env.test
-```
-
-### 2. Document Required Variables
-
-```bash
-# .env.example
-PLIP_LOG_LEVEL=info
-PLIP_LOG_FORMAT=json
-PLIP_LOG_FILE=/var/log/app.log
-# Add your required variables here
-```
-
-### 3. Validate on Startup
+Always check for standard environment variables:
 
 ```javascript
-const requiredVars = ['PLIP_LOG_LEVEL', 'PLIP_LOG_FORMAT'];
-const missing = requiredVars.filter(v => !process.env[v]);
+import { logger } from 'plip';
 
-if (missing.length > 0) {
-  console.error('Missing required environment variables:', missing);
-  process.exit(1);
-}
+const shouldUseColors = !process.env.NO_COLOR && 
+                       (process.env.FORCE_COLOR || process.stdout.isTTY);
+
+logger.config({
+  enableColors: shouldUseColors
+});
 ```
 
-### 4. Secure Sensitive Variables
+### 2. Environment Detection
 
-```bash
-# Use secrets management for sensitive values
-PLIP_LOG_REDACT="${SENSITIVE_FIELDS:-password,token,secret}"
+```javascript
+const isDevelopment = process.env.NODE_ENV === 'development';
+const isTest = process.env.NODE_ENV === 'test';
+const isCI = !!process.env.CI;
+
+logger.config({
+  silent: isTest,
+  enableColors: isDevelopment && !isCI,
+  enableEmojis: isDevelopment
+});
 ```
 
-This comprehensive environment variable reference ensures you can configure Plip Logger appropriately for any deployment scenario while maintaining security and performance best practices.
+### 3. Graceful Degradation
+
+```javascript
+// Detect terminal capabilities
+const hasColorSupport = process.env.TERM !== 'dumb' && 
+                       !process.env.NO_COLOR;
+
+logger.config({
+  enableColors: hasColorSupport,
+  enableSyntaxHighlighting: hasColorSupport
+});
+```
+
+This approach ensures Plip Logger works well across different environments while respecting standard terminal and color conventions.

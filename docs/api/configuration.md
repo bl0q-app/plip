@@ -60,7 +60,7 @@ const autoLogger = createPlip({ enableColors: undefined });
 - `success`: Green
 - `warn`: Yellow
 - `error`: Red
-- `fatal`: Magenta
+- `trace`: Cyan
 
 #### `enabledLevels?: LogLevel[]`
 
@@ -92,7 +92,7 @@ const minimalLogger = createPlip({
 Enumeration of available log levels in order of severity.
 
 ```typescript
-type LogLevel = 'verbose' | 'debug' | 'info' | 'success' | 'warn' | 'error' | 'fatal';
+type LogLevel = 'verbose' | 'debug' | 'info' | 'success' | 'warn' | 'error' | 'trace';
 ```
 
 ### Level Descriptions
@@ -105,7 +105,7 @@ type LogLevel = 'verbose' | 'debug' | 'info' | 'success' | 'warn' | 'error' | 'f
 | `success` | Success messages | Completion confirmations |
 | `warn` | Warning conditions | Recoverable issues, deprecations |
 | `error` | Error conditions | Handled errors, failures |
-| `fatal` | Critical errors | Unrecoverable errors |
+| `trace` | System tracing | Request tracking and diagnostics |
 
 ## Configuration Patterns
 
@@ -311,19 +311,23 @@ export const STANDARD_CONFIGS = {
 } as const;
 ```
 
-### 3. Gradual Level Filtering
+### 3. Environment-Based Level Selection
 
-Use hierarchical level filtering for different environments:
+Choose appropriate levels for different environments:
 
 ```typescript
 const getLevelsForEnvironment = (env: string): LogLevel[] => {
-  const allLevels: LogLevel[] = ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'fatal'];
-  
   switch (env) {
-    case 'development': return allLevels;
-    case 'staging': return allLevels.slice(2); // info and above
-    case 'production': return allLevels.slice(4); // warn and above
-    default: return ['info', 'warn', 'error'];
+    case 'development': 
+      return ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace'];
+    case 'staging': 
+      return ['info', 'success', 'warn', 'error', 'trace']; 
+    case 'production': 
+      return ['warn', 'error', 'trace'];
+    default: 
+      return ['info', 'warn', 'error'];
+  }
+};
   }
 };
 ```

@@ -12,7 +12,7 @@ import { createPlip } from '@ru-dr/plip';
 const productionLogger = createPlip({
   enableEmojis: false,  // Cleaner for log aggregation
   enableColors: false,  // Better for file logging
-  enabledLevels: ['info', 'warn', 'error', 'fatal']
+  enabledLevels: ['info', 'warn', 'error', 'trace']
 });
 ```
 

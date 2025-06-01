@@ -40,7 +40,7 @@ plip.debug("Cache miss for key", { key: "user:123" });
 plip.debug("Middleware stack initialized");
 ```
 
-**Output**: `🐛 [DEBUG] Cache miss for key { "key": "user:123" }`
+**Output**: `🔍 [DEBUG] Cache miss for key { "key": "user:123" }`
 
 #### `info(message: string, data?: any): void`
 
@@ -86,16 +86,16 @@ plip.error("Authentication failed", { userId: 123, reason: "invalid_token" });
 
 **Output**: `💥 [ERROR] Database connection failed { "host": "localhost", "port": 5432 }`
 
-#### `fatal(message: string, data?: any): void`
+#### `trace(message: string, data?: any): void`
 
-Logs critical errors that may cause application termination.
+Logs execution trace information for detailed debugging.
 
 ```typescript
-plip.fatal("Out of memory", { available: "10MB", required: "500MB" });
-plip.fatal("Critical service unavailable", { service: "payment_gateway" });
+plip.trace("Function call trace", { function: "processUser", args: [123] });
+plip.trace("Execution path", { step: "validation", result: "passed" });
 ```
 
-**Output**: `💀 [FATAL] Out of memory { "available": "10MB", "required": "500MB" }`
+**Output**: `🛰️ [TRACE] Function call trace { "function": "processUser", "args": [123] }`
 
 ## Factory Functions
 
@@ -129,15 +129,21 @@ const logger = createPlip({ enableEmojis: true });
 console.log(logger.config.enableEmojis); // true
 ```
 
-## Method Chaining
+## Configuration Methods
 
-Logger methods support fluent chaining for elegant usage:
+Logger configuration methods support fluent chaining:
 
 ```typescript
-plip
-  .info("Starting operation")
-  .debug("Debug information")
-  .success("Operation completed");
+const customLogger = plip
+  .withEmojis(true)
+  .withColors(true)
+  .withSyntaxHighlighting(true)
+  .levels('info', 'warn', 'error');
+
+// Note: Logging methods (info, debug, etc.) do not support chaining
+plip.info("Starting operation");
+plip.debug("Debug information");
+plip.success("Operation completed");
 ```
 
 ## Data Parameter

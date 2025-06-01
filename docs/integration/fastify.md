@@ -17,7 +17,7 @@ const fastify = Fastify({
 // Log server startup
 fastify.listen({ port: 3000 }, (err, address) => {
   if (err) {
-    plip.fatal("💥 Failed to start server", err);
+    plip.error("💥 Failed to start server", err);
     process.exit(1);
   }
   plip.success(`🚀 Fastify server running at ${address}`);
@@ -466,7 +466,7 @@ const start = async () => {
     });
     
   } catch (error) {
-    plip.fatal("💥 Failed to start server", error);
+    plip.error("💥 Failed to start server", error);
     process.exit(1);
   }
 };

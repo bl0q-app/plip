@@ -38,8 +38,8 @@ plip.warn("Memory usage is high");
 // Error messages for failures
 plip.error("Payment processing failed");
 
-// Critical errors that may crash the app
-plip.fatal("Database connection lost");
+// Trace information for detailed debugging
+plip.trace("Function execution trace");
 ```
 
 ## Logging Objects and Data
