@@ -4,9 +4,9 @@ layout: home
 hero:
   name: "Plip"
   text: "Modern logging Framework"
-  tagline: A beautiful yet powerful logging experience for Modern applications.
+  tagline: A beautiful yet powerful logging experience
   image:
-    src: 🫧
+    src: https://em-content.zobj.net/source/microsoft/379/bubbles_1fae7.png
     alt: Bubbles
   actions:
     - theme: brand

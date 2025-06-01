@@ -359,5 +359,5 @@ plip.info("User action performed", {
 ## Next Steps
 
 - [Configuration](/guide/configuration) - Advanced configuration options
-- [Customization](/guide/customization) - Customize Plip's appearance and behavior
+- [Customization](/guide/customization-guide) - Customize Plip's appearance and behavior
 - [Integration Examples](/integration/express) - See Plip in real applications

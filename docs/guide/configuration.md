@@ -233,5 +233,5 @@ const logger = createPlip(validateConfig({
 ## Next Steps
 
 - Learn about [Log Levels](/guide/log-levels) in detail
-- Explore [Customization](/guide/customization) options
+- Explore [Customization](/guide/customization-guide) options
 - Check out configuration [Examples](/examples/custom-loggers)

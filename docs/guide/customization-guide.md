@@ -10,7 +10,11 @@ This comprehensive guide covers every aspect of customizing Plip Logger for your
 4. [Advanced Patterns](#advanced-patterns)
 5. [Enterprise Setups](#enterprise-setups)
 6. [Performance Optimization](#performance-optimization)
-7. [Troubleshooting](#troubleshooting)
+7. [Real-World Examples](#real-world-examples)
+8. [Runtime Customization](#runtime-customization)
+9. [Troubleshooting](#troubleshooting)
+10. [Best Practices](#best-practices)
+11. [Next Steps](#next-steps)
 
 ## Quick Start
 
@@ -717,6 +721,134 @@ Design your log level hierarchies thoughtfully to balance debugging capability w
 
 ### 7. **Error Context Preservation**
 Always include relevant context when logging errors to aid in debugging and monitoring.
+
+## Runtime Customization
+
+### Feature Toggles
+
+```typescript
+const createFeatureAwareLogger = () => {
+  const features = {
+    emojis: process.env.FEATURE_EMOJIS !== 'false',
+    colors: process.env.FEATURE_COLORS !== 'false',
+    verbose: process.env.FEATURE_VERBOSE === 'true'
+  };
+  
+  return createPlip({
+    enableEmojis: features.emojis,
+    enableColors: features.colors,
+    enabledLevels: features.verbose 
+      ? ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
+      : ['info', 'warn', 'error']
+  });
+};
+```
+
+### Adaptive Logger Pattern
+
+```typescript
+class AdaptiveLogger {
+  private logger = createPlip({
+    enableEmojis: true,
+    enableColors: true,
+    enabledLevels: ['info', 'warn', 'error']
+  });
+  
+  setDebugMode(enabled: boolean) {
+    const levels = enabled 
+      ? ['verbose', 'debug', 'info', 'success', 'warn', 'error', 'trace']
+      : ['info', 'warn', 'error'];
+    
+    this.logger = createPlip({
+      enableEmojis: this.logger.config?.enableEmojis ?? true,
+      enableColors: this.logger.config?.enableColors ?? true,
+      enabledLevels: levels
+    });
+  }
+  
+  setProductionMode(enabled: boolean) {
+    this.logger = createPlip({
+      enableEmojis: !enabled,
+      enableColors: !enabled,
+      enabledLevels: enabled 
+        ? ['warn', 'error', 'trace']
+        : ['info', 'success', 'warn', 'error', 'trace']
+    });
+  }
+  
+  get log() {
+    return this.logger;
+  }
+}
+
+// Usage
+const adaptiveLogger = new AdaptiveLogger();
+adaptiveLogger.setDebugMode(true);
+adaptiveLogger.log.debug("Debug mode enabled");
+```
+
+### Structured Logging Pattern
+
+```typescript
+const createStructuredLogger = (service: string, version: string) => {
+  const logger = createPlip({
+    enableEmojis: false,
+    enableColors: true,
+    enabledLevels: ['info', 'warn', 'error', 'trace']
+  });
+  
+  const addMetadata = (data: any = {}) => ({
+    ...data,
+    service,
+    version,
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV
+  });
+  
+  return {
+    info: (message: string, data?: any) => 
+      logger.info(message, addMetadata(data)),
+    warn: (message: string, data?: any) => 
+      logger.warn(message, addMetadata(data)),
+    error: (message: string, data?: any) => 
+      logger.error(message, addMetadata(data)),
+    trace: (message: string, data?: any) => 
+      logger.trace(message, addMetadata(data))
+  };
+};
+
+// Usage
+const serviceLogger = createStructuredLogger('user-service', '1.2.3');
+serviceLogger.info("Service started", { port: 3000 });
+```
+
+### Middleware-Style Logging
+
+```typescript
+const createMiddlewareLogger = (context: string) => {
+  const logger = createPlip({
+    enableEmojis: true,
+    enableColors: true,
+    enabledLevels: ['info', 'warn', 'error']
+  });
+  
+  return {
+    info: (message: string, data?: any) => 
+      logger.info(`[${context}] ${message}`, data),
+    warn: (message: string, data?: any) => 
+      logger.warn(`[${context}] ${message}`, data),
+    error: (message: string, data?: any) => 
+      logger.error(`[${context}] ${message}`, data)
+  };
+};
+
+// Usage
+const authMiddleware = createMiddlewareLogger('AUTH');
+const dbMiddleware = createMiddlewareLogger('DATABASE');
+
+authMiddleware.info("User authenticated", { userId: 123 });
+dbMiddleware.error("Connection failed", { host: 'localhost' });
+```
 
 ## Next Steps
 

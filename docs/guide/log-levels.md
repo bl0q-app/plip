@@ -259,6 +259,6 @@ plip.error("Database error");
 
 ## Next Steps
 
-- Learn about [Customization](/guide/customization) options
+- Learn about [Customization](/guide/customization-guide) options
 - Explore [Examples](/examples/) of level usage
 - Check the [API Reference](/api/logger) for method details

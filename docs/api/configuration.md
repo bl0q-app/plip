@@ -336,4 +336,4 @@ const getLevelsForEnvironment = (env: string): LogLevel[] => {
 
 - Learn about [Types](/api/types) definitions
 - Explore the [Logger API](/api/logger)
-- Check out [Customization](/guide/customization) examples
+- Check out [Customization](/guide/customization-guide) examples

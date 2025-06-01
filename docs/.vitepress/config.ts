@@ -2,16 +2,22 @@ import type { DefaultTheme } from 'vitepress'
 import { defineConfig } from 'vitepress'
 import { version } from '../../package.json'
 
-const GUIDES: DefaultTheme.NavItemWithLink[] = [
-  { text: 'Getting Started', link: '/guide/' },
+const GETTING_STARTED: DefaultTheme.NavItemWithLink[] = [
+  { text: 'Introduction', link: '/introduction' },
   { text: 'Installation', link: '/guide/install' },
-  { text: 'Basic Usage', link: '/guide/basic-usage' },
+  { text: 'Getting Started', link: '/guide/' },
+  { text: 'Basic Usage', link: '/guide/basic-usage' }
+]
+
+const CORE_GUIDES: DefaultTheme.NavItemWithLink[] = [
   { text: 'Configuration', link: '/guide/configuration' },
   { text: 'Log Levels', link: '/guide/log-levels' },
   { text: 'SSR vs CSR', link: '/guide/ssr-csr' },
-  { text: 'Customization', link: '/guide/customization' },
-  { text: 'Complete Customize Guide', link: '/guide/customize-guide' },
-  { text: 'Best Practices', link: '/guide/best-practices' },
+  { text: 'Best Practices', link: '/guide/best-practices' }
+]
+
+const ADVANCED_GUIDES: DefaultTheme.NavItemWithLink[] = [
+  { text: 'Customization Guide', link: '/guide/customization-guide' },
   { text: 'Compatibility', link: '/guide/compatibility' }
 ]
 
@@ -40,6 +46,7 @@ const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
 ]
 
 const REFERENCES: DefaultTheme.NavItemWithLink[] = [
+  { text: 'Roadmap & Features', link: '/references/roadmap' },
   { text: 'Environment Variables', link: '/references/environment' },
   { text: 'Error Codes', link: '/references/errors' }
 ]
@@ -52,8 +59,8 @@ const REQUEST: DefaultTheme.NavItemWithLink[] = [
 ]
 
 export default defineConfig({
-  title: '🫧 Plip Logger',
-  description: 'A delightful, colorful logging experience for modern applications',
+  title: '🫧 Plip',
+  description: 'A beautiful yet powerful logging experience for modern applications.',
   base: '/',
   cleanUrls: true,
     themeConfig: {    nav: [
@@ -61,7 +68,16 @@ export default defineConfig({
         text: 'Guide',
         items: [
           {
-            items: GUIDES
+            text: 'Getting Started',
+            items: GETTING_STARTED
+          },
+          {
+            text: 'Core Features',
+            items: CORE_GUIDES
+          },
+          {
+            text: 'Advanced',
+            items: ADVANCED_GUIDES
           }
         ]
       },
@@ -95,11 +111,18 @@ export default defineConfig({
       }
     ],sidebar: Object.assign(
       {},
-      {
-        '/': [
+      {        '/': [
           {
-            text: 'Guide',
-            items: GUIDES
+            text: 'Getting Started',
+            items: GETTING_STARTED
+          },
+          {
+            text: 'Core Features',
+            items: CORE_GUIDES
+          },
+          {
+            text: 'Advanced',
+            items: ADVANCED_GUIDES
           },
           {
             text: 'Examples',

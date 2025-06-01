@@ -4,20 +4,7 @@
   --vp-c-brand-2: #747bff;
   --vp-c-brand-3: #9499ff;
   --vp-c-brand-soft: #6366f11a;
-  
-  /* Hero gradient styles */
-  --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(
-    120deg,
-    #bd34fe 30%,
-    #41d1ff
-  );
-  --vp-home-hero-image-background-image: linear-gradient(
-    -45deg,
-    #bd34fe 50%,
-    #47caff 50%
-  );
-  --vp-home-hero-image-filter: blur(44px);
+  --vp-c-text: #212529; /* Darker gray for better readability */
 }
 
 /* Dark mode brand colors */
@@ -26,6 +13,7 @@
   --vp-c-brand-2: #949cff;
   --vp-c-brand-3: #6366f1;
   --vp-c-brand-soft: #a8b3ff1a;
+  --vp-c-text: rgba(255, 255, 255, 0.87); /* Slightly off-white for dark mode */
 }
 
 /* Custom logo styles */
@@ -64,10 +52,8 @@
 }
 
 .VPHero .text {
-  color: white;
+  color: var(--vp-c-text);
 }
-
-
 
 /* Feature icons */
 .VPFeature .icon {

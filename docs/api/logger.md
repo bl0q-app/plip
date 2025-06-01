@@ -138,12 +138,38 @@ const customLogger = plip
   .withEmojis(true)
   .withColors(true)
   .withSyntaxHighlighting(true)
+  .withContext({ service: "api", version: "1.0" })
   .levels('info', 'warn', 'error');
+
+// Context is automatically included in all logs
+customLogger.info("Request processed", { endpoint: "/users" });
+// Output: 🫧 [INFO] Request processed {"service":"api","version":"1.0","endpoint":"/users"}
 
 // Note: Logging methods (info, debug, etc.) do not support chaining
 plip.info("Starting operation");
 plip.debug("Debug information");
 plip.success("Operation completed");
+```
+
+### `withContext(context: Record<string, any>): PlipLogger`
+
+Adds persistent context to all log messages. Context is merged with any data provided to individual log calls:
+
+```typescript
+// Create a logger with persistent context
+const authLogger = plip.withContext({ scope: "auth", service: "user-service" });
+
+// Context is automatically included
+authLogger.info("Login attempt"); 
+// Output: 🫧 [INFO] Login attempt {"scope":"auth","service":"user-service"}
+
+authLogger.error("Login failed", { userId: 123, reason: "invalid_password" });
+// Output: 💥 [ERROR] Login failed {"scope":"auth","service":"user-service","userId":123,"reason":"invalid_password"}
+
+// Context can be extended by chaining
+const requestLogger = authLogger.withContext({ requestId: "req-456" });
+requestLogger.warn("Rate limit exceeded");
+// Output: ⚠️ [WARN] Rate limit exceeded {"scope":"auth","service":"user-service","requestId":"req-456"}
 ```
 
 ## Data Parameter

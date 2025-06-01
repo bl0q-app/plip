@@ -4,6 +4,8 @@ This guide covers all the ways to install and set up Plip Logger in your project
 
 ## Package Manager Installation
 
+### JavaScript/TypeScript (Current)
+
 ::: code-group
 
 ```sh [npm]
@@ -23,6 +25,50 @@ $ bun add @ru-dr/plip
 ```
 
 :::
+
+### 🌍 Other Languages (Coming Soon!)
+
+Plip is expanding to bring the same delightful logging experience to more languages:
+
+::: info Python Support (In Development)
+```python
+# Coming Soon! 🐍
+pip install plip
+```
+**Status:** 🚧 Early development - [Track progress](https://github.com/ru-dr/plip/issues)
+:::
+
+::: info Java Support (Planned)
+```bash
+# Coming Soon! ☕
+<dependency>
+    <groupId>io.plip</groupId>
+    <artifactId>plip-logger</artifactId>
+    <version>1.0.0</version>
+</dependency>
+```
+**Status:** 📋 Planned for 2025 - [Join discussion](https://github.com/ru-dr/plip/discussions)
+:::
+
+::: info PHP Support (Planned)
+```bash
+# Coming Soon! 🐘
+composer require plip/logger
+```
+**Status:** 📋 Planned for 2025 - [Join discussion](https://github.com/ru-dr/plip/discussions)
+:::
+
+::: info More Languages
+We're also exploring support for:
+- **Go** 🐹 - Lightweight, fast logging
+- **Rust** 🦀 - Zero-cost abstractions
+- **C#** 💜 - .NET ecosystem integration
+- **Ruby** 💎 - Rails-friendly logging
+
+**Want your language prioritized?** [Vote or request here!](https://github.com/ru-dr/plip/discussions)
+:::
+
+> 💡 **Contribute:** Help us bring plip to your favorite language! Check our [Contributing Guide](../request/contributing.md) to get involved.
 
 ## Requirements
 

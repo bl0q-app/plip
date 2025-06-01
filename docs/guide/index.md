@@ -73,6 +73,7 @@ Your terminal will display beautifully formatted, colorful logs with emojis that
 - [Basic Usage](/guide/basic-usage) - Learn the fundamentals
 - [SSR vs CSR Logging](/guide/ssr-csr) - Server-side and client-side optimized configurations
 - [Configuration](/guide/configuration) - Customize Plip to your needs
+- [Custom Loggers](/examples/custom-loggers) - **Context-aware logging** and advanced patterns
 - [Best Practices](/guide/best-practices) - Write better logs
 
 ## Why Choose Plip?

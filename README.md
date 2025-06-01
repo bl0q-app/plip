@@ -50,6 +50,9 @@ bun add @ru-dr/plip
 
 :::
 
+> **🌍 Multi-Language Support Coming Soon!**  
+> Plip is currently available for **JavaScript/TypeScript** environments. We're actively working on bringing the same delightful logging experience to **Python**, **Java**, **PHP**, and other popular languages. [Follow our progress](https://github.com/ru-dr/plip/issues) or [contribute](./docs/request/contributing.md) to help us expand faster!
+
 ## 🚀 Quick Start
 
 Get logging in seconds:
@@ -192,6 +195,7 @@ const prodLogger = plip.levels('warn', 'error').withEmojis(false);
 - `.withEmojis(enabled)` - Toggle emoji indicators  
 - `.withSyntaxHighlighting(enabled)` - Toggle object highlighting
 - `.withTheme(theme)` - Apply custom theme
+- `.withContext(context)` - Add persistent context to all logs
 - `.levels(...levels)` - Filter enabled log levels
 - `.silent()` - Suppress all output
 
@@ -208,6 +212,28 @@ plip.success("Database connected successfully");
 // With data
 plip.info("New user registered:", { email: "user@example.com", id: 123 });
 plip.error("Authentication failed:", { reason: "invalid_token", userId: 456 });
+```
+
+### Context-Aware Logging
+```typescript
+import { plip } from '@ru-dr/plip';
+
+// Create context-aware loggers for different scopes
+const authLogger = plip.withContext({ scope: "auth" });
+const dbLogger = plip.withContext({ scope: "database", pool: "primary" });
+const apiLogger = plip.withContext({ scope: "api", version: "v1" });
+
+// All logs will include the context automatically
+authLogger.info("User login attempt", { userId: 123, method: "oauth" });
+// Output: 🫧 [INFO] User login attempt {"scope":"auth","userId":123,"method":"oauth"}
+
+dbLogger.warn("Connection pool high usage", { activeConnections: 45 });
+// Output: ⚠️ [WARN] Connection pool high usage {"scope":"database","pool":"primary","activeConnections":45}
+
+// Context can be chained and extended
+const requestLogger = apiLogger.withContext({ requestId: "req-789" });
+requestLogger.error("Request processing failed", { endpoint: "/users" });
+// Output: 💥 [ERROR] Request processing failed {"scope":"api","version":"v1","requestId":"req-789","endpoint":"/users"}
 ```
 
 ### Environment-Specific Logging
@@ -404,6 +430,35 @@ try {
   logger.error('Application error:', error);
 }
 ```
+
+## 📚 Learn More
+
+Explore our comprehensive documentation to master Plip Logger:
+
+### 📖 **Guides**
+- [Basic Usage](./docs/guide/basic-usage.md) - Learn the fundamentals
+- [Configuration](./docs/guide/configuration.md) - Customize Plip to your needs  
+- [SSR vs CSR](./docs/guide/ssr-csr.md) - Server-side and client-side optimized configurations
+- [Best Practices](./docs/guide/best-practices.md) - Write better logs
+
+### 💡 **Examples & Patterns**
+- [Custom Loggers](./docs/examples/custom-loggers.md) - **Context-aware logging** and advanced patterns
+- [Integration Examples](./docs/examples/integration.md) - Framework-specific implementations
+- [Production Setup](./docs/examples/production.md) - Production-ready configurations
+- [SSR/CSR Quick Start](./docs/examples/ssr-csr-quickstart.md) - Get started with server/client logging
+
+### 🔧 **Integrations**
+- [Express.js](./docs/integration/express.md) - Express middleware and patterns
+- [Next.js](./docs/integration/nextjs.md) - Next.js SSR/CSR integration
+- [NestJS](./docs/integration/nestjs.md) - NestJS dependency injection
+- [Database Logging](./docs/integration/database.md) - Database query logging
+
+### 📋 **API Reference**
+- [Logger API](./docs/api/logger.md) - Complete method reference
+- [Configuration](./docs/api/configuration.md) - All configuration options
+- [Types](./docs/api/types.md) - TypeScript definitions
+
+> 💡 **Pro Tip:** Start with [Custom Loggers](./docs/examples/custom-loggers.md) to learn context-aware logging with `plip.withContext({ scope: "auth" })`
 
 ## 🤝 Contributing
 

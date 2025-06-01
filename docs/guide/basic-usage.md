@@ -106,6 +106,57 @@ try {
 }
 ```
 
+## Context-Aware Logging
+
+Add persistent context to your logs using the `withContext()` method:
+
+```typescript
+// Create loggers with persistent context
+const authLogger = plip.withContext({ scope: "auth" });
+const dbLogger = plip.withContext({ scope: "database", pool: "primary" });
+
+// Context is automatically included in all logs
+authLogger.info("User login attempt", { userId: 123 });
+// Output: 🫧 [INFO] User login attempt {"scope":"auth","userId":123}
+
+dbLogger.warn("High connection count", { activeConnections: 45 });
+// Output: ⚠️ [WARN] High connection count {"scope":"database","pool":"primary","activeConnections":45}
+
+// Context can be extended by chaining
+const requestLogger = authLogger.withContext({ requestId: "req-789" });
+requestLogger.success("Request completed", { duration: "150ms" });
+// Output: 🎉 [SUCCESS] Request completed {"scope":"auth","requestId":"req-789","duration":"150ms"}
+```
+
+### Use Cases for Context Logging
+
+- **Service identification**: Track which service generated the log
+- **Request tracing**: Follow requests across your application
+- **User tracking**: Include user context in relevant logs
+- **Environment info**: Add environment/version information
+
+```typescript
+// Service-specific loggers
+const paymentLogger = plip.withContext({ service: "payment-service", version: "2.1.0" });
+const notificationLogger = plip.withContext({ service: "notification-service", version: "1.4.2" });
+
+// Request-scoped logging in Express middleware
+app.use((req, res, next) => {
+  req.logger = plip.withContext({ 
+    requestId: req.headers['x-request-id'] || crypto.randomUUID(),
+    method: req.method,
+    path: req.path
+  });
+  next();
+});
+
+// Usage in route handlers
+app.get('/users/:id', (req, res) => {
+  req.logger.info("Fetching user", { userId: req.params.id });
+  // Auto includes: requestId, method, path, userId
+});
+```
+
 ## Conditional Logging
 
 Use conditional logging for different environments:
@@ -189,6 +240,7 @@ plip.info("Email sent");
 
 ## Next Steps
 
+- [Custom Loggers](/examples/custom-loggers) - **Context-aware logging** with `withContext()` and advanced patterns
 - [Configuration](/guide/configuration) - Customize Plip's behavior
 - [Log Levels](/guide/log-levels) - Deep dive into log levels
 - [Best Practices](/guide/best-practices) - Advanced logging patterns
