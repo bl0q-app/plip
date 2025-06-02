@@ -3,7 +3,7 @@ layout: home
 
 hero:
   name: "Plip"
-  text: "Modern logging Framework"
+  text: "Next Generation logging Utility"
   tagline: A beautiful yet powerful logging experience
   image:
     src: https://em-content.zobj.net/source/microsoft/379/bubbles_1fae7.png

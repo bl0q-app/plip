@@ -166,9 +166,8 @@ export default defineConfig({
       pattern: 'https://github.com/ru-dr/plip/edit/main/docs/:path',
       text: 'Suggest changes to this page'
     }
-  },
-  head: [
-    ['link', { rel: 'icon', href: '/favicon.ico' }],
+  },  head: [
+    ['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }],
     ['meta', { name: 'theme-color', content: '#646cff' }],
     ['meta', { name: 'og:type', content: 'website' }],
     ['meta', { name: 'og:locale', content: 'en' }],
