@@ -1,16 +1,16 @@
 {
   "name": "@ru-dr/plip",
-  "version": "1.1.0",
-  "description": "A minimal, modern, colorful, and emoji-friendly JavaScript logger library",
+  "version": "1.1.1",
+  "description": "A delightful, colorful logging experience for modern applications",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
   "type": "module",
   "files": [
     "dist",
-    "README.md",
-    "LICENSE",
-    "CHANGELOG.md"
+    "../../README.md",
+    "../../LICENSE",
+    "../../CHANGELOG.md"
   ],
   "publishConfig": {
     "access": "public"
@@ -23,18 +23,21 @@
     "test:watch": "bun test --watch",
     "dev": "bun run src/index.ts",
     "prepublishOnly": "bun run build && bun test",
-    "version:patch": "npm version patch",
-    "version:minor": "npm version minor",
-    "version:major": "npm version major",
-    "version:prerelease": "npm version prerelease",
+    
+    "version:patch": "npm version patch --no-git-tag-version",
+    "version:minor": "npm version minor --no-git-tag-version",
+    "version:major": "npm version major --no-git-tag-version",
+    "version:prerelease": "npm version prerelease --no-git-tag-version",
+    
     "release": "bun run build && bun test && npm publish",
     "release:beta": "bun run build && bun test && npm publish --tag beta",
     "release:github": "git push origin --tags && gh release create",
     "release:full": "bun run build && bun test && npm publish && bun run release:github",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs",
-    "docs:build:vercel": "bun install && vitepress build docs"
+    
+    "docs:dev": "vitepress dev ../../docs",
+    "docs:build": "vitepress build ../../docs", 
+    "docs:preview": "vitepress preview ../../docs",
+    "docs:build:vercel": "bun install && vitepress build ../../docs"
   },
   "keywords": [
     "logger",
@@ -51,14 +54,14 @@
     "cli"
   ],
   "author": "rudra",
-  "license": "MIT",  "repository": {
+  "license": "MIT",
+  "repository": {
     "type": "git",
     "url": "git+https://github.com/ru-dr/plip.git"
   },
   "devDependencies": {
     "@types/bun": "latest",
-    "@types/cli-color": "^2.0.6",
-    "vitepress": "^1.6.3"
+    "@types/cli-color": "^2.0.6"
   },
   "peerDependencies": {
     "typescript": "^5"
