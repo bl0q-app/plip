@@ -59,13 +59,13 @@ const REQUEST: DefaultTheme.NavItemWithLink[] = [
 ]
 
 export default defineConfig({
-  title: '🫧 Plip',
+  title: 'Plip Logger',
   description: 'A beautiful yet powerful logging experience for modern applications.',
   base: '/',
   cleanUrls: true,
   lastUpdated: true,
   sitemap: {
-    hostname: 'https://plip.vercel.app'
+    hostname: 'https://plip-logger.vercel.app'
   },
     themeConfig: {    nav: [
       {
