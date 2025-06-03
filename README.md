@@ -2,11 +2,11 @@
 
 # 🫧 Plip Logger
 
-*A delightful, colorful logging experience for modern Node.js applications*
+*A delightful, colorful logging experience for modern applications*
 
-[![npm version](https://badge.fury.io/js/@ru-dr%2Fplip.svg)](https://badge.fury.io/js/@ru-dr%2Fplip)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![TypeScript](https://img.shields.io/badge/TypeScript-Ready-blue.svg)](https://www.typescriptlang.org/)
+[![npm version](https://badgen.net/npm/v/@ru-dr/plip)](https://www.npmjs.com/package/@ru-dr/plip)
+[![License: MIT](https://badgen.net/badge/license/MIT/yellow)](https://opensource.org/licenses/MIT)
+[![TypeScript](https://badgen.net/badge/TypeScript/Ready/blue)](https://www.typescriptlang.org/)
 
 [Installation](#installation) • [Quick Start](#quick-start) • [Documentation](#api-documentation) • [Examples](#examples) • [Contributing](#contributing)
 
