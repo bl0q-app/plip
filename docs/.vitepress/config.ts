@@ -171,11 +171,20 @@ export default defineConfig({
       text: 'Suggest changes to this page'
     }
   },  head: [
-    ['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }],
     ['meta', { name: 'theme-color', content: '#646cff' }],
-    ['meta', { name: 'og:type', content: 'website' }],
-    ['meta', { name: 'og:locale', content: 'en' }],
-    ['meta', { name: 'og:site_name', content: 'Plip Logger' }],
-    ['meta', { name: 'og:image', content: '/og-image.png' }]
+    ['link', { rel: 'icon', href: '/logo.svg', type: 'image/svg+xml' }],
+    ['meta', { name: 'author', content: 'ru-dr' }],
+    ['meta', { property: 'og:title', content: 'Plip - Beautiful Logging Experience' }],
+    ['meta', { property: 'og:type', content: 'website' }],
+    ['meta', { property: 'og:locale', content: 'en' }],
+    ['meta', { property: 'og:site_name', content: 'Plip Logger' }],
+    ['meta', { property: 'og:description', content: 'A beautiful yet powerful logging experience for modern applications.' }],
+    ['meta', { property: 'og:image', content: 'https://plip-logger.vercel.app/og-image.png' }],
+    ['meta', { property: 'og:url', content: 'https://plip-logger.vercel.app' }],
+    ['meta', { name: 'twitter:card', content: 'summary_large_image' }],
+    ['meta', { name: 'twitter:title', content: 'Plip - Beautiful Logging Experience' }],
+    ['meta', { name: 'twitter:description', content: 'A beautiful yet powerful logging experience for modern applications.' }],
+    ['meta', { name: 'twitter:image', content: 'https://plip-logger.vercel.app/og-image.png' }],
+    ['meta', { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover' }]
   ]
 })
