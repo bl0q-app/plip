@@ -35,3 +35,6 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 
 # add vitepress cache
 .vitepress/cache
+
+# Vercel
+.vercel

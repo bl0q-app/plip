@@ -28,10 +28,10 @@
     "version:major": "npm version major",
     "version:prerelease": "npm version prerelease",
     "release": "bun run build && bun test && npm publish",
-    "release:beta": "bun run build && bun test && npm publish --tag beta",
-    "docs:dev": "vitepress dev docs",
+    "release:beta": "bun run build && bun test && npm publish --tag beta",    "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "docs:preview": "vitepress preview docs",
+    "docs:build:vercel": "bun install && vitepress build docs"
   },
   "keywords": [
     "logger",

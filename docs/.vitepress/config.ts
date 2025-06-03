@@ -63,6 +63,10 @@ export default defineConfig({
   description: 'A beautiful yet powerful logging experience for modern applications.',
   base: '/',
   cleanUrls: true,
+  lastUpdated: true,
+  sitemap: {
+    hostname: 'https://plip.vercel.app'
+  },
     themeConfig: {    nav: [
       {
         text: 'Guide',
