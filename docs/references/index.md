@@ -6,7 +6,7 @@ Complete reference documentation for Plip Logger.
 
 - **[Environment Variables](./environment)** - Configuration via environment variables
 - **[Error Codes](./errors)** - Complete error reference and troubleshooting
-- **[Roadmap](./roadmap)** - Future development plans and features
+- **[Roadmap](/request/roadmap)** - Future development plans and features
 
 ## API References
 

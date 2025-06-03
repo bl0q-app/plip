@@ -34,7 +34,7 @@ report.[0-9]_.[0-9]_.[0-9]_.[0-9]_.json
 .DS_Store
 
 # add vitepress cache
-.vitepress/cache
+docs/.vitepress/cache
 
 # Vercel
 .vercel
