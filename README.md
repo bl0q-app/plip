@@ -33,19 +33,19 @@ Tired of boring console logs? **Plip** brings joy back to logging with:
 ::: code-group
 
 ```sh [npm]
-npm install @ru-dr/plip
+$ npm install @ru-dr/plip
 ```
 
-```sh [yarn]  
-yarn add @ru-dr/plip
+```sh [yarn]
+$ yarn add @ru-dr/plip
 ```
 
 ```sh [pnpm]
-pnpm add @ru-dr/plip
+$ pnpm add @ru-dr/plip
 ```
 
 ```sh [bun]
-bun add @ru-dr/plip
+$ bun add @ru-dr/plip
 ```
 
 :::
