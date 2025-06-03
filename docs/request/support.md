@@ -6,8 +6,8 @@ Need help with Plip Logger? This page provides various ways to get support, from
 
 ### Documentation
 - **[Getting Started Guide](/guide/)** - Basic setup and usage
-- **[Configuration Reference](/references/configuration)** - Complete configuration options
-- **[API Reference](/references/logger)** - Method documentation
+- **[Configuration Reference](/api/configuration)** - Complete configuration options
+- **[API Reference](/api/logger)** - Method documentation
 - **[Integration Guides](/integration/)** - Framework-specific setup
 
 ### Common Solutions

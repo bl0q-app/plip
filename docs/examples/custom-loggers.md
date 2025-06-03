@@ -1697,7 +1697,6 @@ Custom loggers in Plip provide powerful capabilities for organizing, contextuali
 
 ### Next Steps
 
-- **[Built-in Context Guide](/examples/context)** - Deep dive into Plip's context system
 - **[Integration Examples](/examples/integration)** - Framework-specific implementations
-- **[Performance Guide](/guide/performance)** - Optimize logging for production
+- **[Best Practices Guide](/guide/best-practices)** - Optimize logging for production
 - **[Configuration Reference](/api/configuration)** - Complete configuration options
