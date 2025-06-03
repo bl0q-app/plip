@@ -29,6 +29,8 @@
     "version:prerelease": "npm version prerelease",
     "release": "bun run build && bun test && npm publish",
     "release:beta": "bun run build && bun test && npm publish --tag beta",
+    "release:github": "git push origin --tags && gh release create",
+    "release:full": "bun run build && bun test && npm publish && bun run release:github",
     "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",

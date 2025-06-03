@@ -30,25 +30,19 @@ Tired of boring console logs? **Plip** brings joy back to logging with:
 
 ## 📦 Installation
 
-::: code-group
+```sh
+# npm
+npm install @ru-dr/plip
 
-```sh [npm]
-$ npm install @ru-dr/plip
+# yarn
+yarn add @ru-dr/plip
+
+# pnpm
+pnpm add @ru-dr/plip
+
+# bun
+bun add @ru-dr/plip
 ```
-
-```sh [yarn]
-$ yarn add @ru-dr/plip
-```
-
-```sh [pnpm]
-$ pnpm add @ru-dr/plip
-```
-
-```sh [bun]
-$ bun add @ru-dr/plip
-```
-
-:::
 
 > **🌍 Multi-Language Support Coming Soon!**  
 > Plip is currently available for **JavaScript/TypeScript** environments. We're actively working on bringing the same delightful logging experience to **Python**, **Java**, **PHP**, and other popular languages. [Follow our progress](https://github.com/ru-dr/plip/issues) or [contribute](./docs/request/contributing.md) to help us expand faster!

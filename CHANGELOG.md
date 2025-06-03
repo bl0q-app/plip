@@ -10,6 +10,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Initial versioning setup with semantic versioning scripts
 
+## [1.1.0] - 2025-06-02
+
+### Added
+- 🏢 Enterprise logger patterns for high-volume production environments
+- 🐳 Docker integration examples and containerization support
+- 🔄 CI/CD pipeline integration templates and configurations
+- 🎨 Enhanced customization options for themes and output formats
+- 🔗 Framework-specific bindings for popular libraries (React, Vue, Angular)
+
+### Improved
+- ⚡ Significant performance optimizations for high-volume logging scenarios
+- 🚀 Reduced memory footprint and faster log processing
+- 📊 Better handling of concurrent logging operations
+
+### Documentation
+- 📚 Added enterprise deployment guides
+- 🐳 Docker setup and best practices documentation
+- 🔧 CI/CD integration examples for GitHub Actions, Jenkins, and GitLab
+- 🏗️ Framework integration guides and examples
+
 ## [1.0.0] - 2025-06-01
 
 ### Added
@@ -35,5 +55,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Framework integration examples (Express.js)
 - Error handling patterns
 
-[Unreleased]: https://github.com/ru-dr/plip/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/ru-dr/plip/compare/v1.1.0...HEAD
+[1.1.0]: https://github.com/ru-dr/plip/compare/v1.0.0...v1.1.0
 [1.0.0]: https://github.com/ru-dr/plip/releases/tag/v1.0.0
