@@ -28,7 +28,8 @@
     "version:major": "npm version major",
     "version:prerelease": "npm version prerelease",
     "release": "bun run build && bun test && npm publish",
-    "release:beta": "bun run build && bun test && npm publish --tag beta",    "docs:dev": "vitepress dev docs",
+    "release:beta": "bun run build && bun test && npm publish --tag beta",
+    "docs:dev": "vitepress dev docs",
     "docs:build": "vitepress build docs",
     "docs:preview": "vitepress preview docs",
     "docs:build:vercel": "bun install && vitepress build docs"
@@ -48,10 +49,9 @@
     "cli"
   ],
   "author": "rudra",
-  "license": "MIT",
-  "repository": {
+  "license": "MIT",  "repository": {
     "type": "git",
-    "url": "https://github.com/ru-dr/plip.git"
+    "url": "git+https://github.com/ru-dr/plip.git"
   },
   "devDependencies": {
     "@types/bun": "latest",
