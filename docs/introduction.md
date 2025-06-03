@@ -85,7 +85,7 @@ While Plip started in the JavaScript ecosystem, we're expanding to bring the sam
 - **PHP** 🐘 (Planned 2025)
 - **Go, Rust, C#, Ruby** and more!
 
-[View our complete roadmap →](/references/roadmap.md#language-support)
+[View our complete roadmap →](/request/roadmap#language-support)
 
 ## 🤝 Join the Community
 

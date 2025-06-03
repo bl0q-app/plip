@@ -46,12 +46,13 @@ const INTEGRATIONS: DefaultTheme.NavItemWithLink[] = [
 ]
 
 const REFERENCES: DefaultTheme.NavItemWithLink[] = [
-  { text: 'Roadmap & Features', link: '/references/roadmap' },
+  
   { text: 'Environment Variables', link: '/references/environment' },
   { text: 'Error Codes', link: '/references/errors' }
 ]
 
 const REQUEST: DefaultTheme.NavItemWithLink[] = [
+  { text: 'Roadmap & Features', link: '/request/roadmap' },
   { text: 'Feature Requests', link: '/request/features' },
   { text: 'Bug Reports', link: '/request/bugs' },
   { text: 'Contributing', link: '/request/contributing' },
