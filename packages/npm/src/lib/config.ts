@@ -1,7 +1,7 @@
 // src/lib/config.ts
 
 import { colors } from '../utils/colors.js';
-import { isNode, isBrowser, isDevelopment, isProduction } from '../utils/env.js';
+import { isNode, isBrowser, isProduction } from '../utils/env.js';
 
 export type LogLevel = "info" | "warn" | "error" | "success" | "debug" | "trace" | "verbose";
 
