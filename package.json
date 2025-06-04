@@ -10,20 +10,6 @@
     "docs:preview": "vitepress preview docs",
     "docs:build:vercel": "bun install && vitepress build docs",
     
-    "npm:build": "cd packages/npm && bun run build",
-    "npm:build:clean": "cd packages/npm && bun run build:clean",
-    "npm:test": "cd packages/npm && bun test",
-    "npm:test:watch": "cd packages/npm && bun test --watch",
-    "npm:dev": "cd packages/npm && bun run dev",
-    "npm:version:patch": "cd packages/npm && npm version patch --no-git-tag-version",
-    "npm:version:minor": "cd packages/npm && npm version minor --no-git-tag-version",
-    "npm:version:major": "cd packages/npm && npm version major --no-git-tag-version",
-    "npm:version:prerelease": "cd packages/npm && npm version prerelease --no-git-tag-version",
-    "npm:release": "npm run npm:build && npm run npm:test && cd packages/npm && npm publish",
-    "npm:release:beta": "npm run npm:build && npm run npm:test && cd packages/npm && npm publish --tag beta",
-    "npm:release:github": "cd packages/npm && git push origin --tags && gh release create",
-    "npm:release:full": "cd packages/npm && bun run release:full",
-    
     "release:github": "git push origin --tags && gh release create"
   },
   "devDependencies": {
