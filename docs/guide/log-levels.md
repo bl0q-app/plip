@@ -113,11 +113,7 @@ info
 debug
   ↑
 verbose (lowest priority)
-```
 
-## Configuring Log Levels
-
-### Enable Specific Levels
 
 ```typescript
 import { createPlip } from '@ru-dr/plip';
